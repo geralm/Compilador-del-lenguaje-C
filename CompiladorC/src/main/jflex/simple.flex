@@ -13,14 +13,15 @@ whitespace = [ \t\r]
 
 %eofval{
 
-    /*return new Token(TokenConstant.EOF, null);*/
+    return new Token(TokenConstant.EOF, null);
     /*Hacer algo al final del archivo*/
 
 %eofval}
 %%
 
 //IDENTIFICADORES
-{letter}({letter}|{digit})* { /* Hacer algo */}
+{letter}({letter}|{digit})* { return new Token(TokenConstant.ID, yytext()); }
 
 //NÚMEROS
-{digit}+ { /* Hacer algo más numéricamente*/ }
+{digit}+ { RETURN new Token(TokenConstant.NUM, yytext()); }
+[^] { return new Token(TokenConstant.ERROR, yytext()); }

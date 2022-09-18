@@ -91,10 +91,10 @@ public class LexerAnalyzer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\1\2";
+    "\1\0\1\1\1\2\1\3";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[3];
+    int [] result = new int[4];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -119,10 +119,10 @@ public class LexerAnalyzer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\3\0\6";
+    "\0\0\0\3\0\6\0\11";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[3];
+    int [] result = new int[4];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -145,10 +145,10 @@ public class LexerAnalyzer {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\0\1\2\1\3\1\0\1\2\2\0\2\3";
+    "\1\2\1\3\1\4\4\0\1\3\2\0\2\4";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[9];
+    int [] result = new int[12];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -191,10 +191,10 @@ public class LexerAnalyzer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\2\1";
+    "\1\0\1\11\2\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[3];
+    int [] result = new int[4];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -606,7 +606,7 @@ public class LexerAnalyzer {
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
           { 
-    /*return new Token(TokenConstant.EOF, null);*/
+    return new Token(TokensConstants.EOF, null);
     /*Hacer algo al final del archivo*/
 
  }
@@ -614,15 +614,20 @@ public class LexerAnalyzer {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { /* Hacer algo más numéricamente*/
-            }
-            // fall through
-          case 3: break;
-          case 2:
-            { /* Hacer algo */
+            { return new Token(TokensConstants.ERROR, yytext());
             }
             // fall through
           case 4: break;
+          case 2:
+            { return new Token(TokensConstants.NUMERO, yytext());
+            }
+            // fall through
+          case 5: break;
+          case 3:
+            { return new Token(TokensConstants.IDENTIFICADOR, yytext());
+            }
+            // fall through
+          case 6: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
