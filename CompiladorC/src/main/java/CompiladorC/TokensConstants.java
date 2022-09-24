@@ -7,6 +7,6 @@ public enum TokensConstants {
     PALABRAS_RESERVADAS,
     OPERADORES,
     LITERALES,
-    EOF;
+    EOF; //token que determina el final del archivo
 
 }

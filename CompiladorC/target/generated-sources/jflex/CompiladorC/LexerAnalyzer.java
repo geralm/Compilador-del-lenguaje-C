@@ -614,17 +614,22 @@ public class LexerAnalyzer {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
+            System.out.println("Error");
             { return new Token(TokensConstants.ERROR, yytext());
             }
             // fall through
           case 4: break;
           case 2:
-            { return new Token(TokensConstants.NUMERO, yytext());
+            {
+              System.out.println("Número");
+              return new Token(TokensConstants.NUMERO, yytext());
             }
             // fall through
           case 5: break;
           case 3:
-            { return new Token(TokensConstants.IDENTIFICADOR, yytext());
+            {
+              System.out.println("Identificador");
+              return new Token(TokensConstants.IDENTIFICADOR, yytext());
             }
             // fall through
           case 6: break;

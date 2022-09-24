@@ -20,8 +20,8 @@ whitespace = [ \t\r]
 %%
 
 //IDENTIFICADORES
-{letter}({letter}|{digit})* { return new Token(TokenConstant.ID, yytext()); }
+{letter}({letter}|{digit})* { return new Token(TokensConstants.IDENTIFICADOR, yytext()); }
 
 //NÚMEROS
-{digit}+ { RETURN new Token(TokenConstant.NUM, yytext()); }
+{digit}+ { RETURN new Token(TokensConstants.NUMERO, yytext()); }
 [^] { return new Token(TokenConstant.ERROR, yytext()); }
