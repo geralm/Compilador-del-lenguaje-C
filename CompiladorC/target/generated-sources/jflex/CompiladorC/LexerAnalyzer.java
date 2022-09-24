@@ -647,6 +647,7 @@ public class LexerAnalyzer {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
 <<<<<<< HEAD
+<<<<<<< HEAD
             { /* Hacer algo más numéricamente*/
             }
             // fall through
@@ -657,17 +658,24 @@ public class LexerAnalyzer {
             // fall through
           case 4: break;
 =======
+=======
+            System.out.println("Error");
+>>>>>>> main
             { return new Token(TokensConstants.ERROR, yytext());
             }
             // fall through
           case 4: break;
           case 2:
-            { return new Token(TokensConstants.NUMERO, yytext());
+            {
+              System.out.println("Número");
+              return new Token(TokensConstants.NUMERO, yytext());
             }
             // fall through
           case 5: break;
           case 3:
-            { return new Token(TokensConstants.IDENTIFICADOR, yytext());
+            {
+              System.out.println("Identificador");
+              return new Token(TokensConstants.IDENTIFICADOR, yytext());
             }
             // fall through
           case 6: break;
