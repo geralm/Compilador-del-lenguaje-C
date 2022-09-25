@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 package CompiladorC;
 
 import java.io.*;
