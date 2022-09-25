@@ -3,13 +3,15 @@ package CompiladorC;
 public class Token {
     private TokensConstants type;
     private String lexema;
+    private int lineNumber;
 
     public Token() {
     }
 
-    public Token(TokensConstants type, String lexema) {
+    public Token(TokensConstants type, String lexema, int lineNumber) {
         this.type = type;
         this.lexema = lexema;
+        this.lineNumber = lineNumber;
     }
 
     public TokensConstants getType() {
@@ -28,11 +30,20 @@ public class Token {
         this.lexema = lexema;
     }
 
+    public int getLineNumber() {
+        return lineNumber;
+    }
+
+    public void setLineNumber(int lineNumber) {
+        this.lineNumber = lineNumber;
+    }
+
     @Override
     public String toString() {
         return "Token{" +
                 "type=" + type +
                 ", lexema='" + lexema + '\'' +
+                ", lineNumber='" + lineNumber + '\'' +
                 '}';
     }
 }

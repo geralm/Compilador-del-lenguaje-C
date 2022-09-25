@@ -6,13 +6,16 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class DemoLexerTest {
     @Test
-    public void matchId() throws IOException {
-        String input = "?";
+    // System.out.println(new Token(TokensConstants.LITERALES, yytext(), yyline).toString());
+    public void noMatch() throws IOException {
+        String input = "0xa";
         Reader stringReader = new StringReader(input);
         LexerAnalyzer lexer = new LexerAnalyzer(stringReader);
         Token token = lexer.yylex();
-
+        assertEquals(TokensConstants.LITERALES, token.getType());
     }
 }
