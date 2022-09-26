@@ -1,14 +1,14 @@
 package CompiladorC;
 
 public enum TokensConstants {
-    IDENTIFICADOR, //LISTO
+    IDENTIFICADOR,
     //NUMERO,
     ERROR,
-    PALABRA_RESERVADA, //LISTO
+    PALABRA_RESERVADA,
     OPERADOR,
     LITERAL,
-    DELIMITADOR, //NO LISTO
-
+    DELIMITADOR,
+    COMENTARIO,
     EOF; //token que determina el final del archivo
 
 }

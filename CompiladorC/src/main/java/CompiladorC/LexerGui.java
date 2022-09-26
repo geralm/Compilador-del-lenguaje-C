@@ -4,6 +4,7 @@ package CompiladorC;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,9 +19,11 @@ public class LexerGui extends JFrame  {
     private JButton compilarButton;
     private JTextArea textArea;
     private JButton archivoButton;
-    private JList list1;
+
     private JPanel mainPanel;
     private JButton bBorrar;
+    private JTable table1;
+    private JScrollPane jtable;
     ArrayList<Token>listaTokens = new ArrayList<Token>();
 
 
@@ -41,15 +44,30 @@ public class LexerGui extends JFrame  {
                 //método para leer cada uno de los tokens y mostrarlos en la interfaz una vez terminados
                 // aquí proceso la cadena
                 String cadena = textArea.getText().trim();
+
                 System.out.println("La cadena obtenida es: "+cadena);
 
                 LexerAnalyzer demoLexer  = new LexerAnalyzer(new StringReader(cadena));
+                /*
                 try {
                     listaTokens.add(demoLexer.yylex());
                 } catch (IOException ioException) {
                     System.out.println("Error al leer el token por IOException");
                     textArea.setText("Error al leer el token por IOException");
                 }
+                */
+                try {
+                    Token token = demoLexer.yylex();
+                    while (token.getType() != TokensConstants.EOF) {
+                        listaTokens.add(token);
+                        token = demoLexer.yylex();
+                        System.out.println(token.toString());
+                    }
+                } catch (IOException ioException) {
+                    System.out.println("Error al leer el token por IOException");
+
+                }
+
                 colocarTokens();
             }
         });
@@ -95,25 +113,19 @@ public class LexerGui extends JFrame  {
     public void borrar(){
         textArea.setText("");
         listaTokens.clear();
-        list1.setModel(new DefaultListModel());
+        table1.setModel(new DefaultTableModel());
     }
     public void colocarTokens( ){
-        String[][] tokenToList = new String[listaTokens.size()][3];
-        DefaultListModel listModel = new DefaultListModel();
-
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{"Token", "Lexema", "Linea"});
         for(int i = 0; i < listaTokens.size(); i++){
             Token unToken = listaTokens.get(i);
-            listModel.add(i,
-                    unToken.getType().toString() +
-                            "       " + unToken.getLexema() + "                                    "
-                            + String.valueOf(unToken.getLineNumber()));
-
-
-
+            model.addRow(new Object[]{unToken.getType(), unToken.getLexema(), String.valueOf(unToken.getLineNumber())});
         }
-        list1.setModel(listModel);
+        table1.setModel(model);
 
     }
+
 
 
 }

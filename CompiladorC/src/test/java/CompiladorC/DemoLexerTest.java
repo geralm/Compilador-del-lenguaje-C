@@ -12,7 +12,7 @@ public class DemoLexerTest {
     @Test
     // System.out.println(new Token(TokensConstants.LITERALES, yytext(), yyline).toString());
     public void noMatch() throws IOException {
-        String input = "#E";
+        String input = "#include \"hola.h\"";
         Reader stringReader = new StringReader(input);
         LexerAnalyzer lexer = new LexerAnalyzer(stringReader);
         Token token = lexer.yylex();
