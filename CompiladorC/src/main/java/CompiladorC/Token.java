@@ -38,6 +38,7 @@ public class Token {
         this.lineNumber = lineNumber;
     }
 
+
     @Override
     public String toString() {
         return "Token{" +

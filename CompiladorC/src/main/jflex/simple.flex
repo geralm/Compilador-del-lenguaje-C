@@ -15,8 +15,10 @@ letter = [A-Za-z]
 
 
 //identifier = [A-Za-z][A-Za-z0-9]*
-whitespace = [ \t\r]
+
 */
+//whitespace = [ \t\r]
+//newLine =[\n]
 
 //ENTEROS
 Zero = 0
@@ -34,37 +36,57 @@ Float4 = [0-9]+ {Exponent}
 Float = ( {Float1} | {Float2} | {Float3} | {Float4} ) [fFdD]? |
 [0-9]+ [fFDd]
 
-//LITERALESS
-Literal = ({Float} | {Integer} )
+//String
+stringLit = \"[^\"]*\"
 
-//IDENTIFICADORES
-Identifier = [A-Za-z][A-Za-z0-9]*
+//Char
+charLit = \'[^\']\'
+
+//LITERALES
+Literal = ({Float} | {Integer} | {stringLit} | {charLit})
+
+//IDENTIFICADOR
+Identificador = [A-Za-z][A-Za-z0-9]*
+//DefMacro = <YYINITIAL> [^#]
+
+Identificadores = ({Identificador})// | {DefMacro})
+
 %type Token
-/*%eofval{
+%eofval{
 
     return new Token(TokensConstants.EOF, null, 0);
     /*Hacer algo al final del archivo*/
 
-%eofval}*/
+%eofval}
 %%
+//Espacios en blanco de cualquier tipo
 
-//PALABRAS RESERVADAS
+//--------------------------------COMENTARIOS--------------------------------
+
+"/*"~"*/" | "//"[^\r\n]* {System.out.println("Comentario encontrado");}
+
+
+//--------------------------------PALABRAS RESERVADAS--------------------------------
 //"" {return new Token(TokensConstants.,yytext());}}
 <YYINITIAL> "auto" | "break" | "case" | "char" | "continue" | "default" | "do" | "double" |
     "else" | "enum" | "extern" | "float" | "for" | "goto" | "if" | "int" | "long" | "register" |
     "return" | "short" | "signed" | "sizeof" | "static" | "struct" | "switch" | "typefed" |
     "union" | "unsigned" | "void" | "volatile" | "while"
-    { return new Token(TokensConstants.PALABRAS_RESERVADAS, yytext(), yyline); }
+    { System.out.println(new Token(TokensConstants.PALABRA_RESERVADA, yytext(), yyline).toString());
+          return new Token(TokensConstants.PALABRA_RESERVADA, yytext(), yyline); }
+//espacios en blanco
 
-//OPERADORES
+
+//--------------------------------OPERADORES--------------------------------
 
 <YYINITIAL> "," | ";" | "++" | "--" | "==" | ">=" | ">" | "?" | "<=" | "<" | "!=" | "||" |
      "&&" | "!"  | "=" | "+" | "-" | "*" | "/" | "%" | "(" | ")" | "[" | "]" | "{" | "}" |
      ":" | "." | "+=" | "-=" | "*=" | "/=" | "&" | "^" | "|" | ">>" | "<<" | "~" | "%=" |
      "&=" | "^=" | "|=" | "<<=" | ">>=" | "->"
-    { return new Token(TokensConstants.OPERADORES, yytext(), yyline); }
+    {System.out.println(new Token(TokensConstants.OPERADOR, yytext(), yyline).toString());
+          return new Token(TokensConstants.OPERADOR, yytext(), yyline); }
 
-//LITERALES
+//--------------------------------LITERALES--------------------------------
 
 /*
 //HEXADECIMALES
@@ -77,12 +99,15 @@ Identifier = [A-Za-z][A-Za-z0-9]*
 {digit}+ { return new Token(TokensConstants.LITERALES, yytext(), yyline); }
 */
 
-{Literal} { return new Token(TokensConstants.LITERALES, yytext(), yyline); }
+{Literal} {System.out.println(new Token(TokensConstants.LITERAL, yytext(), yyline).toString());
+          return new Token(TokensConstants.LITERAL, yytext(), yyline); }
 
-//IDENTIFICADORES
+//--------------------------------IDENTIFICADORES--------------------------------
 //{letter}({letter}|{digit})*
 
-{Identifier} { return new Token(TokensConstants.IDENTIFICADOR, yytext(), yyline); }
+{Identificadores} | <<YYINITIAL> "S" {System.out.println(new Token(TokensConstants.IDENTIFICADOR, yytext(), yyline).toString());
+          return new Token(TokensConstants.IDENTIFICADOR, yytext(), yyline); }
 
-//ERRORES
-[^] { return new Token(TokensConstants.ERROR, yytext(), yyline); }
+//--------------------------------ERRORES--------------------------------
+[^] {System.out.println(new Token(TokensConstants.ERROR, yytext(), yyline).toString());
+          return new Token(TokensConstants.ERROR, yytext(), yyline); }

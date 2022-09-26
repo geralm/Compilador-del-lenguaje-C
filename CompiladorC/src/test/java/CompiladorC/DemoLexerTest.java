@@ -12,10 +12,10 @@ public class DemoLexerTest {
     @Test
     // System.out.println(new Token(TokensConstants.LITERALES, yytext(), yyline).toString());
     public void noMatch() throws IOException {
-        String input = "0xa";
+        String input = "#E";
         Reader stringReader = new StringReader(input);
         LexerAnalyzer lexer = new LexerAnalyzer(stringReader);
         Token token = lexer.yylex();
-        assertEquals(TokensConstants.LITERALES, token.getType());
+        assertEquals(TokensConstants.IDENTIFICADOR, token.getType());
     }
 }

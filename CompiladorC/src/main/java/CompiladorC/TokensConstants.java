@@ -4,10 +4,10 @@ public enum TokensConstants {
     IDENTIFICADOR, //LISTO
     //NUMERO,
     ERROR,
-    PALABRAS_RESERVADAS, //LISTO
-    OPERADORES,
-    LITERALES,
-    DELIMITADORES, //NO LISTO
+    PALABRA_RESERVADA, //LISTO
+    OPERADOR,
+    LITERAL,
+    DELIMITADOR, //NO LISTO
 
     EOF; //token que determina el final del archivo
 
