@@ -5,7 +5,9 @@ public class Token {
     private String lexema;
     private int lineNumber;
 
+
     public Token() {
+
     }
 
     public Token(TokensConstants type, String lexema, int lineNumber) {
