@@ -8,7 +8,6 @@ public enum TokensConstants {
     OPERADOR,
     LITERAL,
     DELIMITADOR,
-    COMENTARIO,
     EOF; //token que determina el final del archivo
 
 }

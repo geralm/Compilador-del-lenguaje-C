@@ -22,15 +22,18 @@ public class LexerGui extends JFrame  {
 
     private JPanel mainPanel;
     private JButton bBorrar;
-    private JTable table1;
+    private JTable tableAceptados;
     private JScrollPane jtable;
+    private JTable tablaErrores;
+    private JLabel labelAceptados;
+    private JLabel labelErrores;
     ArrayList<Token>listaTokens = new ArrayList<Token>();
 
 
     public LexerGui() {
         this.setContentPane(mainPanel);
         setTitle("Compilador C");
-        setSize(700, 500);
+        setSize(1500, 500);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
         setLocationRelativeTo(null);
@@ -106,26 +109,128 @@ public class LexerGui extends JFrame  {
         bBorrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                borrar();
+                borrarTodo();
             }
         });
     }
-    public void borrar(){
+    public void borrarTodo(){
         textArea.setText("");
         listaTokens.clear();
-        table1.setModel(new DefaultTableModel());
+        tableAceptados.setModel(new DefaultTableModel());
     }
+    public void borrarTabla(JTable tabla){ //recibe una tabla y la limpia
+        tabla.setModel(new DefaultTableModel());
+    }
+
+    private  int lexemaExiste(JTable tabla, String lexema){
+        /*Retorna la posición de la fila en la que se encuentra el lexemna si lo encuentra
+        en caso de que no lo encuentra entonces retorna la última posición de la tabla*/
+
+        for(int i = 0; i <tabla.getModel().getRowCount(); i++)
+        {
+            if(tabla.getModel().getValueAt(i, 1).equals(lexema))
+            {
+                return i; // encontrado y retorna la posición
+            }
+        }
+        return -1; // no encontrado
+    }
+
+    private String agregarLineas(Token unToken){
+        ArrayList<String> lineas = new ArrayList<>();
+        int cant = 0;
+        int actLineNumber = unToken.getLineNumber();
+        String linea = "";
+        for (int i = 0; i < listaTokens.size(); i++){
+            Token aToken = listaTokens.get(i);
+            if (unToken.getLexema().equals(aToken.getLexema()) && actLineNumber == aToken.getLineNumber()){
+                cant++;
+                /*if(i == listaTokens.size()-1){
+                    if (cant > 1){
+                        lineas.add(actLineNumber + "(" + cant + ")");
+                    }
+                    else{
+                        lineas.add(String.valueOf(actLineNumber + 1));
+                    }
+                }*/
+            }
+            else if(unToken.getLexema().equals(aToken.getLexema()) && actLineNumber != aToken.getLineNumber()){
+                if (cant > 1){
+                    lineas.add((actLineNumber + 1) + "(" + cant + ")");
+                }
+                else{
+                    lineas.add(String.valueOf(actLineNumber + 1));
+                }
+                cant = 0;
+                actLineNumber = aToken.getLineNumber();
+                i--;
+            }
+        }
+        if (cant > 1){
+            lineas.add((actLineNumber + 1) + "(" + cant + ")");
+        }
+        else {
+            lineas.add(String.valueOf(actLineNumber + 1));
+        }
+        for(int i = 0; i < lineas.size(); i++){
+            if (i == lineas.size()-1){
+                linea = linea.concat(lineas.get(i));
+            }
+            else{
+                linea = linea.concat(lineas.get(i) + ", ");
+            }
+        }
+        System.out.println("La linea generada es: " + linea);
+        return linea;
+    }
+
+
+
     public void colocarTokens( ){
-        DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String[]{"Token", "Lexema", "Linea"});
+        borrarTabla(tableAceptados); //limpio la tabla sin borrar el texto en el textArea
+        borrarTabla(tablaErrores);
+        DefaultTableModel modelAceptados =(DefaultTableModel) tableAceptados.getModel();
+        DefaultTableModel modelErrores = (DefaultTableModel) tablaErrores.getModel();
+        modelAceptados.setColumnIdentifiers(new String[]{"Token", "Lexema", "Linea", "Cantidad"});
+        modelErrores.setColumnIdentifiers(new String[]{"Error", "Lexema", "Linea", "Cantidad"});
+
+
         for(int i = 0; i < listaTokens.size(); i++){
             Token unToken = listaTokens.get(i);
-            model.addRow(new Object[]{unToken.getType(), unToken.getLexema(), String.valueOf(unToken.getLineNumber())});
-        }
-        table1.setModel(model);
+            if(unToken.getType().equals(TokensConstants.ERROR) ){
+                //si es error va para la tabla de errores
+                int fila = lexemaExiste(tablaErrores, unToken.getLexema());
+                if(fila == -1){
+                    //no existe el lexema en la tabla de errores
+                    modelErrores.addRow(new Object[]{unToken.getType(), unToken.getLexema(), agregarLineas(unToken), 1});//String.valueOf(unToken.getLineNumber())
+                }else{
+                    //existe el lexema en la tabla de errore
+                    modelErrores.setValueAt((int)modelErrores.getValueAt(fila, 3)+1, fila, 3);
+                }
+            }else{ //de lo contrario va para la tabla de aceptados
+                int fila = lexemaExiste(tableAceptados, unToken.getLexema());
+                if(fila == -1){
+                    //no existe el lexema en la tabla de aceptados
+                    modelAceptados.addRow(new Object[]{unToken.getType(), unToken.getLexema(), agregarLineas(unToken), 1});
+                }else{
+                    //existe el lexema en la tabla de aceptados
+                    modelAceptados.setValueAt((int)modelAceptados.getValueAt(fila, 3)+1, fila, 3);
 
+                }
+
+            }
+
+        }
+        tableAceptados.setModel(modelAceptados);
+        tablaErrores.setModel (modelErrores);
+        listaTokens.clear();
     }
 
 
 
 }
+
+
+
+
+

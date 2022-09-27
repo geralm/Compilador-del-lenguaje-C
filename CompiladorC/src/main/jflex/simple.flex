@@ -57,7 +57,7 @@ Operadores = ("," | ";" | "++" | "--" | "==" | ">=" | ">" | "?" | "<=" | "<" | "
 Comentarios = ("/*"~"*/" | "//"[^\r\n]*)
 
 //ERRORES
-Errores = [^]
+Error = [^]
 
 %type Token
 %eofval{
@@ -70,11 +70,10 @@ Errores = [^]
 
 //--------------------------------COMENTARIOS--------------------------------
 
-{Comentarios} {System.out.println("Comentarios");new Token(TokensConstants.COMENTARIO,yytext(), yyline);}
+{Comentarios} {System.out.println("Comentarios");}
 //--------------------------------ESPACIOS EN BLANCO--------------------------------
 {whitespace}+ {System.out.println("Espacio en blanco"); /*ignore*/}
 {newline}+ {/*ignore*/}   //Ignorar saltos de linea
-{Palabras_Reservadas} {System.out.println("Palabras reservadas");new Token(TokensConstants.PALABRA_RESERVADA,yytext(), yyline);}
 //--------------------------------OPERADORES--------------------------------
 {Operadores} {System.out.println(new Token(TokensConstants.OPERADOR, yytext(), yyline).toString());
           return new Token(TokensConstants.OPERADOR, yytext(), yyline); }
@@ -82,6 +81,12 @@ Errores = [^]
 //--------------------------------LITERALES--------------------------------
 {Literal} {System.out.println(new Token(TokensConstants.LITERAL, yytext(), yyline).toString());
           return new Token(TokensConstants.LITERAL, yytext(), yyline); }
+
+//--------------------------------ERRORES--------------------------------
+<YYINITIAL> {Integer}+{Identificador} {System.out.println(new Token(TokensConstants.ERROR, yytext(), yyline).toString());
+          return new Token(TokensConstants.ERROR, yytext(), yyline); }
+
+{Palabras_Reservadas} {System.out.println("Palabras reservadas");return new Token(TokensConstants.PALABRA_RESERVADA,yytext(), yyline);}
 
 //--------------------------------IDENTIFICADORES--------------------------------
 //Identificadores
@@ -94,5 +99,5 @@ Errores = [^]
           return new Token(TokensConstants.IDENTIFICADOR, yytext(), yyline); }
 
 //--------------------------------ERRORES--------------------------------
-{Errores} {System.out.println(new Token(TokensConstants.ERROR, yytext(), yyline).toString());
+{Error} {System.out.println(new Token(TokensConstants.ERROR, yytext(), yyline).toString());
           return new Token(TokensConstants.ERROR, yytext(), yyline); }
