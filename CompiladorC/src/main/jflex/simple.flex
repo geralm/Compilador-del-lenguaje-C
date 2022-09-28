@@ -44,7 +44,7 @@ Identificadores = ({Identificador})// | {DefMacro})
 //PALABRAS PALABRA_RESERVADA
 Palabras_Reservadas = ("auto" | "break" | "case" | "char" | "continue" | "default" | "do" | "double" |
                           "else" | "enum" | "extern" | "float" | "for" | "goto" | "if" | "int" | "long" | "register" |
-                          "return" | "short" | "signed" | "sizeof" | "static" | "struct" | "switch" | "typefed" |
+                          "return" | "short" | "signed" | "sizeof" | "static" | "struct" | "switch" | "typedef" |
                           "union" | "unsigned" | "void" | "volatile" | "while")
 
 //OPERADORES
