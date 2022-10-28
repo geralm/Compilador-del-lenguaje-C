@@ -36,7 +36,7 @@ charLit = \'[^\']\'
 Literal = ({Float} | {Integer} | {stringLit} | {charLit})
 
 //IDENTIFICADOR
-Identificador = [A-Za-z][A-Za-z0-9]*
+Identificador = [_A-Za-z][_A-Za-z0-9]*
 //DefMacro = <YYINITIAL> [^#]
 
 Identificadores = ({Identificador})// | {DefMacro})
