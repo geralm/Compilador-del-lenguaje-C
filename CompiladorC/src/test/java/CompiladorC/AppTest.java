@@ -19,7 +19,7 @@ public class AppTest
     @Test
     public void parserAnaylysis()throws Exception
     {
-        String expresion = "2*4+6*3";
+        String expresion = "2*s+6*3";
         LexerCupAnalyzer lexer = new LexerCupAnalyzer(new StringReader(expresion));
         Parser p = new Parser(lexer);
         Integer resultado = (Integer) p.parse().value;
