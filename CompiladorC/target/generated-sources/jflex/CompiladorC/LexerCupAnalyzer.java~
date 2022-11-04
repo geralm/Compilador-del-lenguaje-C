@@ -683,7 +683,7 @@ public class LexerCupAnalyzer implements java_cup.runtime.Scanner {
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
             zzDoEOF();
-          {     return symbol(ParserSym.EOF);
+          {     return new symbol(ParserSym.EOF);
  }
       }
       else {

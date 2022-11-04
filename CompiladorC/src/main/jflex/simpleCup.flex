@@ -8,10 +8,11 @@ import java_cup.runtime.*;
 %line
 %class LexerCupAnalyzer
 %cup
-
+digit = [0-9]
+letter = [a-zA-Z]
 whitespace = [ \t\r]
 newline =[\n]
-
+/*
 //ENTEROS
 Zero = 0
 DecInt = [1-9][0-9]*
@@ -58,7 +59,7 @@ Operadores = ("," | ";" | "++" | "--" | "==" | ">=" | ">" | "?" | "<=" | "<" | "
 Comentarios = ("/*"~"*/" | "//"[^\r\n]*)
 
 //ERRORES
-Error = [^]
+Error = [^]*/
 
 %{
     StringBuffer string = new StringBuffer();
@@ -71,15 +72,22 @@ Error = [^]
     }
 %}
 
-%type Token
+//%type Token
 %eofval{
-
-    return new symbol(ParserSym.EOF);
-    /*Hacer algo al final del archivo*/
-
+    return symbol(ParserSym.EOF);
 %eofval}
-%%
 
+%%
+{digit} + { return symbol(ParserSym.NUMBER, Integer.valueOf(yytext())); }
+"(" + { return symbol(ParserSym.LPAREN, yytext()); }
+")" + { return symbol(ParserSym.RPAREN, yytext()); }
+"+" + { return symbol(ParserSym.PLUS, yytext()); }
+"*" + { return symbol(ParserSym.TIMES, yytext()); }
+
+{whitespace}+ { /**/ }
+[^] { throw new Error("Cadena ilegal <" + yytext() + ">"); }
+
+/*
 //--------------------------------COMENTARIOS--------------------------------
 
 {Comentarios} {System.out.println("Comentarios");}
@@ -113,3 +121,4 @@ Error = [^]
 //--------------------------------ERRORES--------------------------------
 {Error} {System.out.println(new Token(TokensConstants.ERROR, yytext(), yyline).toString());
           return new Token(TokensConstants.ERROR, yytext(), yyline); }
+*/
