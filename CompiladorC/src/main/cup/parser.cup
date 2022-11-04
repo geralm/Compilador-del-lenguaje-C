@@ -6,6 +6,24 @@ class Parser;
 
 /*Terminales*/
 
+terminal OPERADOR, PALABRA_RESERVADA, LITERAL, IDENTIFICADOR;
+
+/*No Terminales*/
+
+/*Presedencia*/
+
+/*Gramáticas*/
+
+
+
+
+
+
+//EXAMPLE OF FILE STRUCTURE
+
+/*
+/*Terminales*/
+
 terminal PLUS, TIMES, LPAREN, RPAREN;
 terminal Integer NUMBER;
 
@@ -20,7 +38,7 @@ precedence left TIMES;
 
 /*Gramáticas*/
 
-start with expr;
+//start with expr;
 
 expr ::= expr:e1 PLUS expr:e2 {: RESULT = e1 + e2; :}
       |  expr:e1 TIMES expr:e2 {: RESULT = e1 * e2; :}

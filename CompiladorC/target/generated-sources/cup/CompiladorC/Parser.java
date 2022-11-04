@@ -31,7 +31,7 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\005\000\002\002\004\000\002\002\005\000\002\002" +
+    "\000\005\000\002\002\005\000\002\002\004\000\002\002" +
     "\005\000\002\002\005\000\002\002\003" });
 
   /** Access to production table. */
@@ -40,15 +40,15 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\013\000\006\006\005\010\004\001\002\000\012\002" +
-    "\ufffd\004\ufffd\005\ufffd\007\ufffd\001\002\000\006\006\005" +
-    "\010\004\001\002\000\010\002\010\004\007\005\011\001" +
-    "\002\000\006\006\005\010\004\001\002\000\004\002\001" +
-    "\001\002\000\006\006\005\010\004\001\002\000\012\002" +
-    "\uffff\004\uffff\005\uffff\007\uffff\001\002\000\012\002\000" +
-    "\004\000\005\011\007\000\001\002\000\010\004\007\005" +
-    "\011\007\015\001\002\000\012\002\ufffe\004\ufffe\005\ufffe" +
-    "\007\ufffe\001\002" });
+    "\000\013\000\006\012\005\014\004\001\002\000\012\002" +
+    "\ufffd\010\ufffd\011\ufffd\013\ufffd\001\002\000\006\012\005" +
+    "\014\004\001\002\000\010\002\010\010\007\011\011\001" +
+    "\002\000\006\012\005\014\004\001\002\000\004\002\000" +
+    "\001\002\000\006\012\005\014\004\001\002\000\012\002" +
+    "\uffff\010\uffff\011\uffff\013\uffff\001\002\000\012\002\001" +
+    "\010\001\011\011\013\001\001\002\000\010\010\007\011" +
+    "\011\013\015\001\002\000\012\002\ufffe\010\ufffe\011\ufffe" +
+    "\013\ufffe\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -89,7 +89,7 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Indicates start state. */
   public int start_state() {return 0;}
   /** Indicates start production. */
-  public int start_production() {return 0;}
+  public int start_production() {return 1;}
 
   /** <code>EOF</code> Symbol index. */
   public int EOF_sym() {return 0;}
@@ -123,21 +123,7 @@ class CUP$Parser$actions {
       switch (CUP$Parser$act_num)
         {
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 0: // $START ::= expr EOF 
-            {
-              Object RESULT =null;
-		int start_valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
-		int start_valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
-		Integer start_val = (Integer)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		RESULT = start_val;
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("$START",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
-            }
-          /* ACCEPT */
-          CUP$Parser$parser.done_parsing();
-          return CUP$Parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 1: // expr ::= expr PLUS expr 
+          case 0: // expr ::= expr PLUS expr 
             {
               Integer RESULT =null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
@@ -149,6 +135,20 @@ class CUP$Parser$actions {
 		 RESULT = e1 + e2; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expr",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 1: // $START ::= expr EOF 
+            {
+              Object RESULT =null;
+		int start_valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int start_valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		Integer start_val = (Integer)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		RESULT = start_val;
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("$START",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          /* ACCEPT */
+          CUP$Parser$parser.done_parsing();
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
