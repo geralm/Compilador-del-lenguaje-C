@@ -6,16 +6,46 @@ class Parser;
 
 /*Terminales*/
 
-terminal OPERADOR, PALABRA_RESERVADA, LITERAL, IDENTIFICADOR;
+terminal OPERADOR, PALABRA_RESERVADA, LITERAL, IDENTIFICADOR,
+    Break, Case, Char, Const, Continue, Default, Do, Else, For, If, Int, Long, Return,
+     Short, Switch, Void, While, Increment, Decrement, Igual, Suma, Resta, Multiplicacion, Division,
+     SumaIgual, RestaIgual, MultIgual, DivIgual, Modulo, Igualdad, Desigualdad, Mayorque, Menorque,
+     MayorIgual, MenorIgual, Negacion, Or, And, PuntoComa, DoblePunto, Coma;
 
 /*No Terminales*/
 
+nonterminal TipoDato, OpAsignacion,
+    OpAritmeticoUnario, OpAritmeticoBinario, OpBoolBinario, OpBoolUnario, ExpAritmetica,
+    ExpAritmeticaP, ExpBool, ExpBoolP, ExpBoolPP, DeclaracionVariable, DeclaracionVariableP,
+    NuevaVariable, MasVariables, DeclaracionFuncion, DeclaracionFuncionVoid, Parametros,
+    ParametrosAdicionales, CuerpoFunciones, Retornable, CuerpoFuncionesVoid, CUERPO,
+    LlamarFunciones, ASIGNACION, VALOR, IF, ELSE, FOR, CuerpoCiclo, Incremento, WHILE,
+    DoWhile, SWITCH, CASE, DEFAULT, MAIN, PROGRAMA;
 /*Presedencia*/
+
+precedence left Suma;
+precedence left Resta;
+precedence left Multiplicacion;
+precedence left Division;
+
 
 /*Gramáticas*/
 
+start with PROGRAMA;
 
+PROGRAMA ::= DeclaracionVariable PROGRAMA;
+    //| DeclaracionFuncion PROGRAMA
+    //| DeclaracionFuncionVoid PROGRAMA;
 
+DeclaracionVariable ::= DeclaracionVariableP
+    | Const DeclaracionVariableP;
+
+DeclaracionVariableP ::= TipoDato NuevaVariable;
+
+NuevaVariable ::= IDENTIFICADOR MasVariables
+    | IDENTIFICADOR Igual LITERAL MasVariables;
+
+MasVariables ::= IDENTIFICADOR MasVariables | Coma IDENTIFICADOR Igual LITERAL MasVariables;//FALTA EPSILON
 
 
 
@@ -23,24 +53,25 @@ terminal OPERADOR, PALABRA_RESERVADA, LITERAL, IDENTIFICADOR;
 
 /*
 /*Terminales*/
-
+/*
 terminal PLUS, TIMES, LPAREN, RPAREN;
 terminal Integer NUMBER;
-
+*/
 /*No Terminales*/
-
+/*
 non terminal Integer expr;
-
+*/
 /*Presedencia*/
-
+/*
 precedence left PLUS;
 precedence left TIMES;
-
+*/
 /*Gramáticas*/
 
 //start with expr;
-
+/*
 expr ::= expr:e1 PLUS expr:e2 {: RESULT = e1 + e2; :}
       |  expr:e1 TIMES expr:e2 {: RESULT = e1 * e2; :}
       |  LPAREN expr:e RPAREN  {: RESULT = e; :}
       |  NUMBER:n              {: RESULT = n; :};
+*/
