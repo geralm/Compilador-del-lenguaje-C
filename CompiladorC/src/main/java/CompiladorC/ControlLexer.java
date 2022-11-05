@@ -1,5 +1,7 @@
 package CompiladorC;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -29,6 +31,25 @@ public class ControlLexer implements IControl <String>{
 
         }
     }
+
+    @Override
+    public DefaultTableModel construirModelo(JTable tablaErroresLexicos) {
+        DefaultTableModel modelErrores = (DefaultTableModel) tablaErroresLexicos.getModel(); //crea un nuevo modelo
+        modelErrores.setColumnIdentifiers(new String[]{"Error", "Lexema", "Linea", "Cantidad"}); //cambia los nombres de las columnas
+        for(Token unToken : listaTokens){
+            if(unToken.getType().equals(TokensConstants.ERROR)){ //si es error
+                int fila = lexemaInTable(tablaErroresLexicos,unToken.getLexema()); //busca si el lexema ya está en la tabla
+                if(fila == -1){ //si no está en la tabla
+                    modelErrores.addRow(new Object[]{unToken.getType(), unToken.getLexema(), agregarLineas(unToken), 1}); //agrega el token a la tabla
+                }else{ //si está en la tabla
+                    modelErrores.setValueAt((int)modelErrores.getValueAt(fila, 3)+1, fila, 3);
+                }
+            }
+        }
+        return modelErrores;
+        //Aquí liimpiaba los tokens pero ya no pueedo limpiarlos porque los necesito para el parser
+    }
+
     public String agregarLineas(Token unToken){
         ArrayList<String> lineas = new ArrayList<>();
         int cant = 0;
@@ -67,6 +88,18 @@ public class ControlLexer implements IControl <String>{
         }
         System.out.println("La linea generada es: " + linea);
         return linea;
+    }
+    private int lexemaInTable(JTable tabla, String lexema){
+        /*Retorna la posición de la fila en la que se encuentra el lexemna si lo encuentra
+        en caso de que no lo encuentra entonces retorna la última posición de la tabla*/
+        for(int i = 0; i <tabla.getModel().getRowCount(); i++)
+        {
+            if(tabla.getModel().getValueAt(i, 1).equals(lexema))
+            {
+                return i; // encontrado y retorna la posición
+            }
+        }
+        return -1; // no encontrado
     }
     public ArrayList<Token> getListaTokens() {
         return listaTokens;

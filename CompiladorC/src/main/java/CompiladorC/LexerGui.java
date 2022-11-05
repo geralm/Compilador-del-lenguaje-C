@@ -3,9 +3,14 @@ package CompiladorC;
 
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 //
 
 public class LexerGui extends JFrame  {
@@ -26,6 +31,7 @@ public class LexerGui extends JFrame  {
     private JPanel JPanelTittle;
     private JPanel JPanelPrograma;
     private JPanel JPanelCompilador;
+    private JButton buttonSalir;
 
     private Control control;
 
@@ -37,8 +43,7 @@ public class LexerGui extends JFrame  {
         this.setContentPane(mainPanel);
         setTitle("Compilador C");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setUndecorated(true);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         setVisible(true);
         setLocationRelativeTo(null);
         control = new Control(this);
@@ -49,7 +54,7 @@ public class LexerGui extends JFrame  {
                 // aquí proceso la cadena
                 String cadena = textArea.getText().trim();
                 System.out.println("La cadena obtenida es: "+cadena);
-                control.procesar(cadena); //procesa la cadena y de una vez colocarErroresLexicos en la tabla
+                control.compilarTodo(cadena); //procesa la cadena y de una vez colocarErroresLexicos en la tabla
             }
         });
 
@@ -70,6 +75,42 @@ public class LexerGui extends JFrame  {
                 String cadena = textArea.getText().trim();
                 control.tokenizar(cadena); //procesa la cadena y de una vez colocarErroresLexicos en la tabla
                 buttonParsear.setEnabled(true);
+            }
+        });
+        buttonSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        archivoButton.addActionListener(new  ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fc = new JFileChooser();
+                FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de texto", "txt", "c");
+                int selection = fc.showOpenDialog(null);
+                if (selection == JFileChooser.APPROVE_OPTION) {
+                    //método para leer el archivo y mostrarlo en el textArea
+                    File fichero = fc.getSelectedFile();
+                    String ruta = fichero.getAbsolutePath();
+                    if(ruta.endsWith(".txt") || ruta.endsWith(".c")){
+                        System.out.println("La ruta del archivo seleccionado ha sido obtenida exitosamente");
+                        try(FileReader fr = new FileReader(fichero)){
+                            String cadena = "";
+                            int valor = fr.read();
+                            while(valor != -1){
+                                cadena = cadena + (char)valor;
+                                valor = fr.read();
+                            }
+                            textArea.setText(cadena);
+
+                        }catch(IOException ex){
+                            System.out.println("Error al leer el archivo");
+
+                        }
+                    }
+                    control.limpiar();
+                }
             }
         });
     }

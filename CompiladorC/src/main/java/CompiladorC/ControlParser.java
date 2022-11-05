@@ -1,5 +1,8 @@
 package CompiladorC;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 public class ControlParser implements IControl <Object>{
 
     public ControlParser() {
@@ -11,6 +14,11 @@ public class ControlParser implements IControl <Object>{
 
     @Override
     public void procesar(Object datos) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public DefaultTableModel construirModelo(JTable tabla) {
         throw new UnsupportedOperationException();
     }
 }
