@@ -117,7 +117,7 @@ public class LexerGui extends JFrame  {
 
     public String getArchivo(){
         return textArea.getText().trim();
-    }
+    } 
     public void limpiarTabla(JTable tabla){ //recibe una tabla y la limpia
         tabla.setModel(new DefaultTableModel());
     }
