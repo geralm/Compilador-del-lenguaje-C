@@ -10,7 +10,7 @@ import java_cup.runtime.*;
 
 // See https://github.com/jflex-de/jflex/issues/222
 @SuppressWarnings("FallThrough")
-public class LexerCupAnalyzer implements java_cup.runtime.Scanner {
+public class LexerCupAnalyzer implements Scanner {
 
   /** This character denotes the end of file. */
   public static final int YYEOF = -1;
@@ -717,7 +717,9 @@ public class LexerCupAnalyzer implements java_cup.runtime.Scanner {
    * @return the next token.
    * @exception java.io.IOException if any I/O-Error occurs.
    */
+
   @Override  public java_cup.runtime.Symbol next_token() throws java.io.IOException {
+
     int zzInput;
     int zzAction;
 

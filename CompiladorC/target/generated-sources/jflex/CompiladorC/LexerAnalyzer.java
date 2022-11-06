@@ -385,7 +385,7 @@ public class LexerAnalyzer {
   }
 
   /** Input device. */
-  private java.io.Reader zzReader;
+  private Reader zzReader;
 
   /** Current state of the DFA. */
   private int zzState;
@@ -449,7 +449,7 @@ public class LexerAnalyzer {
    *
    * @param   in  the java.io.Reader to read input from.
    */
-  public LexerAnalyzer(java.io.Reader in) {
+  public LexerAnalyzer(Reader in) {
     this.zzReader = in;
   }
 
@@ -465,9 +465,9 @@ public class LexerAnalyzer {
    * Refills the input buffer.
    *
    * @return {@code false} iff there was new input.
-   * @exception java.io.IOException  if any I/O-Error occurs
+   * @exception IOException  if any I/O-Error occurs
    */
-  private boolean zzRefill() throws java.io.IOException {
+  private boolean zzRefill() throws IOException {
 
     /* first: make room (if you can) */
     if (zzStartRead > 0) {
@@ -500,7 +500,7 @@ public class LexerAnalyzer {
 
     /* not supposed to occur according to specification of java.io.Reader */
     if (numRead == 0) {
-      throw new java.io.IOException(
+      throw new IOException(
           "Reader returned 0 characters. See JFlex examples/zero-reader for a workaround.");
     }
     if (numRead > 0) {
@@ -530,9 +530,9 @@ public class LexerAnalyzer {
   /**
    * Closes the input reader.
    *
-   * @throws java.io.IOException if the reader could not be closed.
+   * @throws IOException if the reader could not be closed.
    */
-  public final void yyclose() throws java.io.IOException {
+  public final void yyclose() throws IOException {
     zzAtEOF = true; // indicate end of file
     zzEndRead = zzStartRead; // invalidate buffer
 
@@ -554,7 +554,7 @@ public class LexerAnalyzer {
    *
    * @param reader The new input stream.
    */
-  public final void yyreset(java.io.Reader reader) {
+  public final void yyreset(Reader reader) {
     zzReader = reader;
     zzEOFDone = false;
     yyResetPosition();
@@ -694,9 +694,9 @@ public class LexerAnalyzer {
    * or an I/O-Error occurs.
    *
    * @return the next token.
-   * @exception java.io.IOException if any I/O-Error occurs.
+   * @exception IOException if any I/O-Error occurs.
    */
-  public Token yylex() throws java.io.IOException {
+  public Token yylex() throws IOException {
     int zzInput;
     int zzAction;
 
