@@ -8,53 +8,88 @@ package CompiladorC;
 /** CUP generated interface containing symbol constants. */
 public interface ParserSym {
   /* terminals */
-  public static final int Or = 42;
-  public static final int Desigualdad = 36;
-  public static final int Coma = 46;
-  public static final int PuntoComa = 44;
-  public static final int Negacion = 41;
-  public static final int MultIgual = 32;
-  public static final int Increment = 23;
-  public static final int If = 15;
-  public static final int Menorque = 38;
-  public static final int Void = 21;
-  public static final int Default = 11;
-  public static final int Else = 13;
-  public static final int Decrement = 24;
-  public static final int Break = 6;
+  public static final int Extern = 16;
+  public static final int Return = 24;
   public static final int IDENTIFICADOR = 5;
-  public static final int Long = 17;
-  public static final int RestaIgual = 31;
-  public static final int Return = 18;
-  public static final int While = 22;
-  public static final int Division = 29;
-  public static final int Int = 16;
-  public static final int DivIgual = 33;
-  public static final int Modulo = 34;
-  public static final int For = 14;
-  public static final int EOF = 0;
-  public static final int And = 43;
-  public static final int error = 1;
-  public static final int Switch = 20;
-  public static final int PALABRA_RESERVADA = 3;
-  public static final int Char = 8;
-  public static final int Do = 12;
-  public static final int Continue = 10;
-  public static final int Case = 7;
-  public static final int LITERAL = 4;
-  public static final int MenorIgual = 40;
-  public static final int Short = 19;
+  public static final int Incremento = 42;
+  public static final int Menos = 38;
+  public static final int Menor = 48;
+  public static final int LlaveIzq = 59;
+  public static final int Break = 7;
+  public static final int Coma = 53;
+  public static final int RestaAsignacion = 64;
+  public static final int CorcheteIzq = 57;
+  public static final int DesplazamientoIzquierdaAsignacion = 79;
+  public static final int Porcentaje = 70;
+  public static final int Long = 22;
+  public static final int Punto = 62;
+  public static final int Default = 11;
+  public static final int Char = 9;
+  public static final int AndAsignacion = 76;
+  public static final int Decremento = 41;
+  public static final int For = 18;
   public static final int OPERADOR = 2;
-  public static final int Const = 9;
-  public static final int Mayorque = 37;
-  public static final int SumaIgual = 30;
-  public static final int Resta = 27;
-  public static final int DoblePunto = 45;
-  public static final int MayorIgual = 39;
-  public static final int Igualdad = 35;
-  public static final int Multiplicacion = 28;
-  public static final int Suma = 26;
-  public static final int Igual = 25;
+  public static final int Void = 34;
+  public static final int PorcentajeAsignacion = 75;
+  public static final int DosPuntos = 61;
+  public static final int DobleIgual = 44;
+  public static final int Else = 14;
+  public static final int Mas = 37;
+  public static final int DesplazamientoDerechaAsignacion = 80;
+  public static final int Int = 21;
+  public static final int AndDoble = 51;
+  public static final int LITERAL = 4;
+  public static final int DesplazamientoDerecha = 72;
+  public static final int Typedef = 31;
+  public static final int MenorIgual = 47;
+  public static final int ParentesisDer = 56;
+  public static final int Do = 12;
+  public static final int Static = 28;
+  public static final int DesplazamientoIzquierda = 73;
+  public static final int OrAsignacion = 78;
+  public static final int DivisionAsignacion = 66;
+  public static final int Signed = 26;
+  public static final int Unsigned = 33;
+  public static final int Short = 25;
+  public static final int Case = 8;
+  public static final int SumaAsignacion = 63;
+  public static final int Volatile = 35;
+  public static final int Circunflejo = 69;
+  public static final int Continue = 10;
+  public static final int Or = 71;
+  public static final int And = 68;
+  public static final int OrDoble = 50;
+  public static final int Sizeof = 27;
+  public static final int Mayor = 46;
+  public static final int Auto = 6;
+  public static final int If = 20;
+  public static final int LlaveDer = 60;
+  public static final int MayorIgual = 45;
+  public static final int EOF = 0;
+  public static final int CorcheteDer = 58;
+  public static final int Double = 13;
+  public static final int Struct = 29;
+  public static final int Division = 40;
+  public static final int PuntoComa = 54;
+  public static final int PALABRA_RESERVADA = 3;
+  public static final int error = 1;
+  public static final int Tilde = 74;
+  public static final int Diferente = 49;
+  public static final int Flecha = 81;
+  public static final int Enum = 15;
+  public static final int MultiplicacionAsignacion = 65;
+  public static final int Float = 17;
+  public static final int ParentesisIzq = 55;
+  public static final int CircunflejoAsignacion = 77;
+  public static final int Register = 23;
+  public static final int Not = 52;
+  public static final int SignoPregunta = 67;
+  public static final int Igual = 43;
+  public static final int Goto = 19;
+  public static final int While = 36;
+  public static final int Union = 32;
+  public static final int Multiplicacion = 39;
+  public static final int Switch = 30;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -62,47 +97,82 @@ public interface ParserSym {
   "PALABRA_RESERVADA",
   "LITERAL",
   "IDENTIFICADOR",
+  "Auto",
   "Break",
   "Case",
   "Char",
-  "Const",
   "Continue",
   "Default",
   "Do",
+  "Double",
   "Else",
+  "Enum",
+  "Extern",
+  "Float",
   "For",
+  "Goto",
   "If",
   "Int",
   "Long",
+  "Register",
   "Return",
   "Short",
+  "Signed",
+  "Sizeof",
+  "Static",
+  "Struct",
   "Switch",
+  "Typedef",
+  "Union",
+  "Unsigned",
   "Void",
+  "Volatile",
   "While",
-  "Increment",
-  "Decrement",
-  "Igual",
-  "Suma",
-  "Resta",
+  "Mas",
+  "Menos",
   "Multiplicacion",
   "Division",
-  "SumaIgual",
-  "RestaIgual",
-  "MultIgual",
-  "DivIgual",
-  "Modulo",
-  "Igualdad",
-  "Desigualdad",
-  "Mayorque",
-  "Menorque",
+  "Decremento",
+  "Incremento",
+  "Igual",
+  "DobleIgual",
   "MayorIgual",
+  "Mayor",
   "MenorIgual",
-  "Negacion",
-  "Or",
-  "And",
+  "Menor",
+  "Diferente",
+  "OrDoble",
+  "AndDoble",
+  "Not",
+  "Coma",
   "PuntoComa",
-  "DoblePunto",
-  "Coma"
+  "ParentesisIzq",
+  "ParentesisDer",
+  "CorcheteIzq",
+  "CorcheteDer",
+  "LlaveIzq",
+  "LlaveDer",
+  "DosPuntos",
+  "Punto",
+  "SumaAsignacion",
+  "RestaAsignacion",
+  "MultiplicacionAsignacion",
+  "DivisionAsignacion",
+  "SignoPregunta",
+  "And",
+  "Circunflejo",
+  "Porcentaje",
+  "Or",
+  "DesplazamientoDerecha",
+  "DesplazamientoIzquierda",
+  "Tilde",
+  "PorcentajeAsignacion",
+  "AndAsignacion",
+  "CircunflejoAsignacion",
+  "OrAsignacion",
+  "DesplazamientoIzquierdaAsignacion",
+  "DesplazamientoDerechaAsignacion",
+  "Flecha"
   };
 }
 

@@ -3,14 +3,32 @@ package CompiladorC;
 import java_cup.runtime.*;
 
 class Parser;
+/*
+parser code
+{:
+    private Symbol s;
+
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+    }
+:};*/
 
 /*Terminales*/
 
 terminal OPERADOR, PALABRA_RESERVADA, LITERAL, IDENTIFICADOR,
-    Break, Case, Char, Const, Continue, Default, Do, Else, For, If, Int, Long, Return,
-     Short, Switch, Void, While, Increment, Decrement, Igual, Suma, Resta, Multiplicacion, Division,
-     SumaIgual, RestaIgual, MultIgual, DivIgual, Modulo, Igualdad, Desigualdad, Mayorque, Menorque,
-     MayorIgual, MenorIgual, Negacion, Or, And, PuntoComa, DoblePunto, Coma;
+     Auto, Break, Case, Char, Continue, Default, Do, Double, Else, Enum, Extern, Float, For, Goto,
+     If, Int, Long, Register, Return, Short, Signed, Sizeof, Static, Struct, Switch,
+     Typedef, Union, Unsigned, Void, Volatile, While, Mas, Menos, Multiplicacion, Division, Decremento,
+     Incremento, Igual, DobleIgual, MayorIgual, Mayor, MenorIgual, Menor, Diferente, OrDoble, AndDoble, Not, Coma,
+     PuntoComa, ParentesisIzq, ParentesisDer, CorcheteIzq, CorcheteDer, LlaveIzq, LlaveDer, DosPuntos,
+     Punto, SumaAsignacion, RestaAsignacion, MultiplicacionAsignacion, DivisionAsignacion, SignoPregunta,
+     And, Circunflejo, Porcentaje, Or, DesplazamientoDerecha, DesplazamientoIzquierda, Tilde, PorcentajeAsignacion,
+     AndAsignacion, CircunflejoAsignacion, OrAsignacion, DesplazamientoIzquierdaAsignacion,
+     DesplazamientoDerechaAsignacion, Flecha;
 
 /*No Terminales*/
 
@@ -19,21 +37,26 @@ nonterminal TipoDato, OpAsignacion,
     ExpAritmeticaP, ExpBool, ExpBoolP, ExpBoolPP, DeclaracionVariable, DeclaracionVariableP,
     NuevaVariable, MasVariables, DeclaracionFuncion, DeclaracionFuncionVoid, Parametros,
     ParametrosAdicionales, CuerpoFunciones, Retornable, CuerpoFuncionesVoid, CUERPO,
-    LlamarFunciones, ASIGNACION, VALOR, IF, ELSE, FOR, CuerpoCiclo, Incremento, WHILE,
+    LlamarFunciones, ASIGNACION, VALOR, IF, ELSE, FOR, CuerpoCiclo, WHILE,
     DoWhile, SWITCH, CASE, DEFAULT, MAIN, PROGRAMA;
 /*Presedencia*/
-
+/*
 precedence left Suma;
 precedence left Resta;
 precedence left Multiplicacion;
-precedence left Division;
+precedence left Division;*/
 
 
 /*Gramáticas*/
 
 start with PROGRAMA;
 
-PROGRAMA ::= DeclaracionVariable PROGRAMA;
+PROGRAMA ::= TipoDato IDENTIFICADOR Igual LITERAL PuntoComa;
+
+TipoDato ::= Char | Int | Long | Short;
+
+/*
+PROGRAMA ::= DeclaracionVariable PROGRAMA | DeclaracionVariable;
     //| DeclaracionFuncion PROGRAMA
     //| DeclaracionFuncionVoid PROGRAMA;
 
@@ -45,7 +68,7 @@ DeclaracionVariableP ::= TipoDato NuevaVariable;
 NuevaVariable ::= IDENTIFICADOR MasVariables
     | IDENTIFICADOR Igual LITERAL MasVariables;
 
-MasVariables ::= IDENTIFICADOR MasVariables | Coma IDENTIFICADOR Igual LITERAL MasVariables;//FALTA EPSILON
+MasVariables ::= IDENTIFICADOR MasVariables | Coma IDENTIFICADOR Igual LITERAL MasVariables;//FALTA EPSILON*/
 
 
 

@@ -22,7 +22,14 @@ public class AppTest
         String expresion = "int i = 5;";
         LexerCupAnalyzer lexer = new LexerCupAnalyzer(new StringReader(expresion));
         Parser p = new Parser(lexer);
-        Integer resultado = (Integer) p.parse().value;
-        System.out.println(resultado);
+        //Integer resultado = (Integer) p.parse().value;
+        //System.out.println(resultado);
+        try{
+            p.parse();
+            System.out.println("Funciona");
+        }
+        catch(Exception e){
+            System.out.println("Falló");
+        }
     }
 }

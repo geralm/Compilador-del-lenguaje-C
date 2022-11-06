@@ -32,68 +32,26 @@ public class LexerCupAnalyzer implements java_cup.runtime.Scanner {
   };
 
   /**
-   * Top-level table for translating characters to character classes
+   * Translates characters to character classes
    */
-  private static final int [] ZZ_CMAP_TOP = zzUnpackcmap_top();
-
-  private static final String ZZ_CMAP_TOP_PACKED_0 =
-    "\1\0\u10ff\u0100";
-
-  private static int [] zzUnpackcmap_top() {
-    int [] result = new int[4352];
-    int offset = 0;
-    offset = zzUnpackcmap_top(ZZ_CMAP_TOP_PACKED_0, offset, result);
-    return result;
-  }
-
-  private static int zzUnpackcmap_top(String packed, int offset, int [] result) {
-    int i = 0;       /* index in packed string  */
-    int j = offset;  /* index in unpacked array */
-    int l = packed.length();
-    while (i < l) {
-      int count = packed.charAt(i++);
-      int value = packed.charAt(i++);
-      do result[j++] = value; while (--count > 0);
-    }
-    return j;
-  }
-
-
-  /**
-   * Second-level tables for translating characters to character classes
-   */
-  private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
-
-  private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\11\0\1\1\1\2\2\0\1\3\22\0\1\4\1\5"+
-    "\1\6\1\7\1\0\1\5\1\10\1\11\2\12\1\13"+
-    "\1\14\1\12\1\15\1\16\1\17\1\20\7\21\2\22"+
-    "\2\12\1\23\1\24\1\25\1\12\1\0\3\26\1\27"+
-    "\1\30\1\27\5\31\1\32\13\31\1\33\2\31\1\12"+
-    "\1\0\1\12\1\5\1\31\1\0\1\34\1\35\1\36"+
-    "\1\37\1\40\1\41\1\42\1\43\1\44\1\31\1\45"+
-    "\1\46\1\47\1\50\1\51\1\52\1\31\1\53\1\54"+
-    "\1\55\1\56\1\57\1\60\1\61\1\62\1\63\1\12"+
-    "\1\64\2\12\u0181\0";
-
-  private static int [] zzUnpackcmap_blocks() {
-    int [] result = new int[512];
-    int offset = 0;
-    offset = zzUnpackcmap_blocks(ZZ_CMAP_BLOCKS_PACKED_0, offset, result);
-    return result;
-  }
-
-  private static int zzUnpackcmap_blocks(String packed, int offset, int [] result) {
-    int i = 0;       /* index in packed string  */
-    int j = offset;  /* index in unpacked array */
-    int l = packed.length();
-    while (i < l) {
-      int count = packed.charAt(i++);
-      int value = packed.charAt(i++);
-      do result[j++] = value; while (--count > 0);
-    }
-    return j;
-  }
+  private static final char [] ZZ_CMAP = {
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  2,  0,  0,  3,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     4,  5,  6,  7,  0,  5,  8,  9, 10, 10, 11, 12, 10, 13, 14, 15, 
+    16, 17, 17, 17, 17, 17, 17, 17, 18, 18, 10, 10, 19, 20, 21, 10, 
+     0, 22, 22, 22, 23, 24, 23, 25, 25, 25, 25, 25, 26, 25, 25, 25, 
+    25, 25, 25, 25, 25, 25, 25, 25, 27, 25, 25, 10,  0, 10,  5, 25, 
+     0, 28, 29, 30, 31, 32, 33, 34, 35, 36, 25, 37, 38, 39, 40, 41, 
+    42, 25, 43, 44, 45, 46, 47, 48, 49, 50, 51, 10, 52, 10, 10,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
+  };
 
   /**
    * Translates DFA states to action switch labels.
@@ -433,7 +391,6 @@ public class LexerCupAnalyzer implements java_cup.runtime.Scanner {
   private int yycolumn;
 
   /** Number of characters up to the start of the matched text. */
-  @SuppressWarnings("unused")
   private long yychar;
 
   /** Whether the scanner is currently at the beginning of a line. */
@@ -466,8 +423,7 @@ public class LexerCupAnalyzer implements java_cup.runtime.Scanner {
    * Translates raw input code points to DFA table row
    */
   private static int zzCMap(int input) {
-    int offset = input & 255;
-    return offset == input ? ZZ_CMAP_BLOCKS[offset] : ZZ_CMAP_BLOCKS[ZZ_CMAP_TOP[input >> 8] | offset];
+    return ZZ_CMAP[input];
   }
 
   /**
@@ -734,6 +690,8 @@ public class LexerCupAnalyzer implements java_cup.runtime.Scanner {
     while (true) {
       zzMarkedPosL = zzMarkedPos;
 
+      yychar+= zzMarkedPosL-zzStartRead;
+
       boolean zzR = false;
       int zzCh;
       int zzCharCount;
@@ -890,7 +848,7 @@ public class LexerCupAnalyzer implements java_cup.runtime.Scanner {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
             { Symbol errorSymb = symbol(ParserSym.error, yytext());
-                     System.out.println("Cadena ilegal <" + simbolo.value + "> en la línea <" + simbolo.right + ">");
+                     System.out.println("Cadena ilegal <" + errorSymb.value + "> en la línea <" + errorSymb.right + ">");
                      return errorSymb;
             }
             // fall through
@@ -907,7 +865,98 @@ public class LexerCupAnalyzer implements java_cup.runtime.Scanner {
           case 12: break;
           case 4:
             { System.out.println(symbol(ParserSym.OPERADOR, yytext()).toString());
-          return symbol(ParserSym.OPERADOR, yytext());
+            switch (yytext()){
+                case "+":
+                    return symbol(ParserSym.Mas, yytext());
+                case "-":
+                    return symbol(ParserSym.Menos, yytext());
+                case "*":
+                    return symbol(ParserSym.Multiplicacion, yytext());
+                case "/":
+                    return symbol(ParserSym.Division, yytext());
+                case "--":
+                  return symbol(ParserSym.Decremento, yytext());
+                case "++":
+                    return symbol(ParserSym.Incremento, yytext());
+                case "=":
+                    return symbol(ParserSym.Igual, yytext());
+                case "==":
+                    return symbol(ParserSym.DobleIgual, yytext());
+                case ">=":
+                    return symbol(ParserSym.MayorIgual, yytext());
+                case ">":
+                    return  symbol(ParserSym.Mayor, yytext());
+                case "<=":
+                    return symbol(ParserSym.MenorIgual, yytext());
+                case "<":
+                    return symbol(ParserSym.Menor, yytext());
+                case "!=":
+                    return symbol(ParserSym.Diferente, yytext());
+                case "||":
+                    return symbol(ParserSym.OrDoble, yytext());
+                case "&&":
+                    return symbol(ParserSym.AndDoble, yytext());
+                case "!":
+                    return symbol(ParserSym.Not, yytext());
+                case ",":
+                    return symbol(ParserSym.Coma, yytext());
+                case ";":
+                    return symbol(ParserSym.PuntoComa, yytext());
+                case "(":
+                    return symbol(ParserSym.ParentesisIzq, yytext());
+                case ")":
+                    return symbol(ParserSym.ParentesisDer, yytext());
+                case "[":
+                    return symbol(ParserSym.CorcheteIzq, yytext());
+                case "]":
+                    return symbol(ParserSym.CorcheteDer, yytext());
+                case "{":
+                    return symbol(ParserSym.LlaveIzq, yytext());
+                case "}":
+                    return symbol(ParserSym.LlaveDer, yytext());
+                case ":":
+                    return symbol(ParserSym.DosPuntos, yytext());
+                case ".":
+                    return symbol(ParserSym.Punto, yytext());
+                case "+=":
+                    return symbol(ParserSym.SumaAsignacion, yytext());
+                case "-=":
+                    return symbol(ParserSym.RestaAsignacion, yytext());
+                case "*=":
+                    return symbol(ParserSym.MultiplicacionAsignacion, yytext());
+                case "/=":
+                    return symbol(ParserSym.DivisionAsignacion, yytext());
+                case "?":
+                    return symbol(ParserSym.SignoPregunta, yytext());
+                case "&":
+                    return symbol(ParserSym.And, yytext());
+                case "^":
+                    return symbol(ParserSym.Circunflejo, yytext());
+                case "%":
+                    return symbol(ParserSym.Porcentaje, yytext());
+                case "|":
+                    return symbol(ParserSym.Or, yytext());
+                case ">>":
+                    return symbol(ParserSym.DesplazamientoDerecha, yytext());
+                case "<<":
+                    return symbol(ParserSym.DesplazamientoIzquierda, yytext());
+                case "~":
+                    return symbol(ParserSym.Tilde, yytext());
+                case "%=":
+                    return symbol(ParserSym.PorcentajeAsignacion, yytext());
+                case "&=":
+                    return symbol(ParserSym.AndAsignacion, yytext());
+                case "^=":
+                    return symbol(ParserSym.CircunflejoAsignacion, yytext());
+                case "|=":
+                    return symbol(ParserSym.OrAsignacion, yytext());
+                case "<<=":
+                    return symbol(ParserSym.DesplazamientoIzquierdaAsignacion, yytext());
+                case ">>=":
+                    return symbol(ParserSym.DesplazamientoDerechaAsignacion, yytext());
+                case "->":
+                    return symbol(ParserSym.Flecha, yytext());
+          }
             }
             // fall through
           case 13: break;
@@ -930,14 +979,85 @@ public class LexerCupAnalyzer implements java_cup.runtime.Scanner {
           case 16: break;
           case 8:
             { Symbol errorSymb = symbol(ParserSym.error, yytext());
-            System.out.println("Cadena ilegal <" + simbolo.value + "> en la línea <" + simbolo.right + ">");
+            System.out.println("Cadena ilegal <" + errorSymb.value + "> en la línea <" + errorSymb.right + ">");
             return errorSymb;
             }
             // fall through
           case 17: break;
           case 9:
             { System.out.println(symbol(ParserSym.PALABRA_RESERVADA, yytext()).toString());
-          return symbol(ParserSym.PALABRA_RESERVADA, yytext());
+         /* "auto" | "break" | "case" | "char" | "continue" | "default" | "do" | "double" |
+                                    "else" | "enum" | "extern" | "float" | "for" | "goto" | "if" | "int" | "long" | "register" |
+                                    "return" | "short" | "signed" | "sizeof" | "static" | "struct" | "switch" | "typedef" |
+                                    "union" | "unsigned" | "void" | "volatile" | "while"*/
+        switch (yytext().toString()){
+            case "auto":
+                return symbol(ParserSym.Auto, yytext());
+            case "break":
+                return symbol(ParserSym.Break, yytext());
+            case "case":
+              return symbol(ParserSym.Case, yytext());
+            case "char":
+                return symbol(ParserSym.Char, yytext());
+            case "continue":
+                return symbol(ParserSym.Continue, yytext());
+            case "default":
+                return symbol(ParserSym.Default, yytext());
+            case "do":
+                return symbol(ParserSym.Do, yytext());
+            case "double":
+                return symbol(ParserSym.Double, yytext());
+            case "else":
+              return symbol(ParserSym.Else, yytext());
+            case "enum":
+                return symbol(ParserSym.Enum, yytext());
+            case "extern":
+                return symbol(ParserSym.Extern, yytext());
+            case "float":
+                return symbol(ParserSym.Float, yytext());
+            case "for":
+                return symbol(ParserSym.For, yytext());
+            case "goto":
+                return symbol(ParserSym.Goto, yytext());
+            case "if":
+              return symbol(ParserSym.If, yytext());
+            case "int":
+                return symbol(ParserSym.Int, yytext());
+            case "long":
+                return symbol(ParserSym.Long, yytext());
+            case "register":
+                return symbol(ParserSym.Register, yytext());
+            case "return":
+                return symbol(ParserSym.Return, yytext());
+            case "short":
+                return symbol(ParserSym.Short, yytext());
+            case "signed":
+              return symbol(ParserSym.Signed, yytext());
+            case "sizeof":
+                return symbol(ParserSym.Sizeof, yytext());
+            case "static":
+                return symbol(ParserSym.Static, yytext());
+            case "struct":
+                return symbol(ParserSym.Struct, yytext());
+            case "switch":
+                return symbol(ParserSym.Switch, yytext());
+            case "break":
+                return symbol(ParserSym.Break, yytext());
+            case "case":
+              return symbol(ParserSym.Case, yytext());
+            case "typedef":
+                return symbol(ParserSym.Typedef, yytext());
+            case "union":
+                return symbol(ParserSym.Union, yytext());
+            case "unsigned":
+                return symbol(ParserSym.Unsigned, yytext());
+            case "void":
+                return symbol(ParserSym.Void, yytext());
+            case "volatile":
+                return symbol(ParserSym.Volatile, yytext());
+            case "while":
+                return symbol(ParserSym.While, yytext());
+        }
             }
             // fall through
           case 18: break;
