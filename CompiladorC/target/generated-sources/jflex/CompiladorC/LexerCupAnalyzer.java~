@@ -10,7 +10,7 @@ import java_cup.runtime.*;
 
 // See https://github.com/jflex-de/jflex/issues/222
 @SuppressWarnings("FallThrough")
-public class LexerCupAnalyzer implements Scanner {
+public class LexerCupAnalyzer implements java_cup.runtime.Scanner {
 
   /** This character denotes the end of file. */
   public static final int YYEOF = -1;
@@ -717,9 +717,7 @@ public class LexerCupAnalyzer implements Scanner {
    * @return the next token.
    * @exception java.io.IOException if any I/O-Error occurs.
    */
-
   @Override  public java_cup.runtime.Symbol next_token() throws java.io.IOException {
-
     int zzInput;
     int zzAction;
 
@@ -892,7 +890,7 @@ public class LexerCupAnalyzer implements Scanner {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
             { Symbol errorSymb = symbol(ParserSym.error, yytext());
-                     System.out.println("Cadena ilegal <" + errorSymb.value + "> en la línea <" + errorSymb.right + ">");
+                     System.out.println("Cadena ilegal <" + simbolo.value + "> en la línea <" + simbolo.right + ">");
                      return errorSymb;
             }
             // fall through
@@ -932,7 +930,7 @@ public class LexerCupAnalyzer implements Scanner {
           case 16: break;
           case 8:
             { Symbol errorSymb = symbol(ParserSym.error, yytext());
-            System.out.println("Cadena ilegal <" + errorSymb.value + "> en la línea <" + errorSymb.right + ">");
+            System.out.println("Cadena ilegal <" + simbolo.value + "> en la línea <" + simbolo.right + ">");
             return errorSymb;
             }
             // fall through

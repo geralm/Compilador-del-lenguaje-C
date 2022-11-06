@@ -71,15 +71,11 @@ Error = [^]
     }
 %}
 
-%type Token
 %eofval{
-
-    return new symbol(ParserSym.EOF);
-    /*Hacer algo al final del archivo*/
-
+    return symbol(ParserSym.EOF);
 %eofval}
-%%
 
+%%
 //--------------------------------COMENTARIOS--------------------------------
 
 {Comentarios} {System.out.println("Comentarios");}
@@ -87,29 +83,34 @@ Error = [^]
 {whitespace}+ {System.out.println("Espacio en blanco"); /*ignore*/}
 {newline}+ {/*ignore*/}   //Ignorar saltos de linea
 //--------------------------------OPERADORES--------------------------------
-{Operadores} {System.out.println(new Token(TokensConstants.OPERADOR, yytext(), yyline).toString());
-          return new Token(TokensConstants.OPERADOR, yytext(), yyline); }
+{Operadores} {System.out.println(symbol(ParserSym.OPERADOR, yytext()).toString());
+          return symbol(ParserSym.OPERADOR, yytext()); }
 
 //--------------------------------LITERALES--------------------------------
-{Literal} {System.out.println(new Token(TokensConstants.LITERAL, yytext(), yyline).toString());
-          return new Token(TokensConstants.LITERAL, yytext(), yyline); }
+{Literal} {System.out.println(symbol(ParserSym.LITERAL, yytext()).toString());
+          return symbol(ParserSym.LITERAL, yytext()); }
 
 //--------------------------------ERRORES--------------------------------
-<YYINITIAL> {Integer}+{Identificador} {System.out.println(new Token(TokensConstants.ERROR, yytext(), yyline).toString());
-          return new Token(TokensConstants.ERROR, yytext(), yyline); }
+<YYINITIAL> {Integer}+{Identificador} {Symbol errorSymb = symbol(ParserSym.error, yytext());
+            System.out.println("Cadena ilegal <" + errorSymb.value + "> en la línea <" + errorSymb.right + ">");
+            return errorSymb;}
 
-{Palabras_Reservadas} {System.out.println("Palabras reservadas");return new Token(TokensConstants.PALABRA_RESERVADA,yytext(), yyline);}
+//--------------------------------PALABRAS RESERVADAS--------------------------------
+
+{Palabras_Reservadas} {System.out.println(symbol(ParserSym.PALABRA_RESERVADA, yytext()).toString());
+          return symbol(ParserSym.PALABRA_RESERVADA, yytext());}
 
 //--------------------------------IDENTIFICADORES--------------------------------
 //Identificadores
-{Identificadores} {System.out.println(new Token(TokensConstants.IDENTIFICADOR, yytext(), yyline).toString());
-          return new Token(TokensConstants.IDENTIFICADOR, yytext(), yyline); }
+{Identificadores} {System.out.println(symbol(ParserSym.IDENTIFICADOR, yytext()).toString());
+          return symbol(ParserSym.IDENTIFICADOR, yytext()); }
 
 //MACROS E IMPORTACIONES
 <YYINITIAL> ^"#" ("include " ("<"{Identificador}".h>" | \"{Identificador}".h"\")| "define "{Identificador}" "({Literal} | {Operadores} | {whitespace})+)
-    {System.out.println(new Token(TokensConstants.IDENTIFICADOR, yytext(), yyline).toString());
-          return new Token(TokensConstants.IDENTIFICADOR, yytext(), yyline); }
+    {System.out.println(symbol(ParserSym.IDENTIFICADOR, yytext()).toString());
+          return symbol(ParserSym.IDENTIFICADOR, yytext()); }
 
 //--------------------------------ERRORES--------------------------------
-{Error} {System.out.println(new Token(TokensConstants.ERROR, yytext(), yyline).toString());
-          return new Token(TokensConstants.ERROR, yytext(), yyline); }
+{Error} {Symbol errorSymb = symbol(ParserSym.error, yytext());
+                     System.out.println("Cadena ilegal <" + errorSymb.value + "> en la línea <" + errorSymb.right + ">");
+                     return errorSymb;}
