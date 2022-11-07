@@ -70,6 +70,7 @@ public interface ParserSym {
   public static final int Double = 14;
   public static final int Struct = 30;
   public static final int Division = 41;
+  public static final int Read = 83;
   public static final int PuntoComa = 55;
   public static final int PALABRA_RESERVADA = 3;
   public static final int error = 1;
@@ -84,6 +85,7 @@ public interface ParserSym {
   public static final int Modulo = 71;
   public static final int Register = 24;
   public static final int Not = 53;
+  public static final int Write = 84;
   public static final int SignoPregunta = 68;
   public static final int Igual = 44;
   public static final int Goto = 20;
@@ -174,7 +176,9 @@ public interface ParserSym {
   "OrAsignacion",
   "DesplazamientoIzquierdaAsignacion",
   "DesplazamientoDerechaAsignacion",
-  "Flecha"
+  "Flecha",
+  "Read",
+  "Write"
   };
 }
 

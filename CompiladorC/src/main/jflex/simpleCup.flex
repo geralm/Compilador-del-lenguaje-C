@@ -48,7 +48,7 @@ Identificadores = ({Identificador})// | {DefMacro})
 Palabras_Reservadas = ("auto" | "break" | "case" | "char" | "continue" | "default" | "do" | "double" |
                           "else" | "enum" | "extern" | "float" | "for" | "goto" | "if" | "int" | "long" | "register" |
                           "return" | "short" | "signed" | "sizeof" | "static" | "struct" | "switch" | "typedef" |
-                          "union" | "unsigned" | "void" | "volatile" | "while")
+                          "union" | "unsigned" | "void" | "volatile" | "while" | "read" | "write")
 
 //OPERADORES
 Operadores = ("," | ";" | "++" | "--" | "==" | ">=" | ">" | "?" | "<=" | "<" | "!=" | "||" |
@@ -263,6 +263,10 @@ Error = [^]
                 return symbol(ParserSym.Volatile, yytext());
             case "while":
                 return symbol(ParserSym.While, yytext());
+            /*case "read":
+                return symbol(ParserSym.Read, yytext());
+            case "write":
+                return symbol(ParserSym.Write, yytext());*/
         }
   }
 

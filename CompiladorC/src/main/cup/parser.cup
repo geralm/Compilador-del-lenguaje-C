@@ -12,6 +12,9 @@ import javax.xml.transform.stream.*;
 class Parser;
 
 parser code {:
+
+    public static int errors = 0;
+
     public void syntax_error(Symbol cur_token){
 	System.err.println("Syntax error at "+cur_token);
     }
@@ -61,6 +64,26 @@ parser code {:
 	    e.printStackTrace();
 	}
     }
+
+    public void report_error(String message, Object info) {
+        if (info instanceof String){
+    	errors++;
+          System.err.println("  "+ errors + "==> " + info + " "+ message +
+    					"\n       Parsing resumed from 2nd token before" ); //+ s.current_lexeme()+"\n");
+        }
+        else {
+        	StringBuffer m = new StringBuffer("Error ");
+        	if (info instanceof java_cup.runtime.Symbol)
+         	   m.append( "("+info.toString()+")" );
+        	m.append(" : "+message);
+        	System.err.println(m);
+        }
+      }
+
+      public void report_fatal_error(String message, Object info) {
+        report_error(message, info);
+        throw new RuntimeException("Fatal Syntax Error");
+      }
 :};
 /*Terminales*/
 
@@ -73,27 +96,21 @@ terminal OPERADOR, PALABRA_RESERVADA, LITERAL, IDENTIFICADOR,
      Punto, SumaAsignacion, RestaAsignacion, MultiplicacionAsignacion, DivisionAsignacion, SignoPregunta,
      And, Circunflejo, Modulo, Or, DesplazamientoDerecha, DesplazamientoIzquierda, Tilde, ModuloAsignacion,
      AndAsignacion, CircunflejoAsignacion, OrAsignacion, DesplazamientoIzquierdaAsignacion,
-     DesplazamientoDerechaAsignacion, Flecha;
+     DesplazamientoDerechaAsignacion, Flecha, Read, Write;
 
 /*No Terminales*/
 
-nonterminal TipoDato, OpAsignacion,
-    OpAritmeticoUnario, OpAritmeticoBinario, OpBoolBinario, OpBoolUnario, ExpAritmetica,
-    ExpAritmeticaP, ExpBool, ExpBoolP, ExpBoolPP, DeclaracionVariable, DeclaracionVariableP,
-    NuevaVariable, MasVariables, DeclaracionFuncionVoid, Parametros,
-    ParametrosAdicionales, CuerpoFunciones, Retornable, CuerpoFuncionesVoid, CUERPO,
-    LlamarFunciones, ASIGNACION, VALOR, IF, ELSE, FOR, CuerpoCiclo, WHILE,
-    DoWhile, SWITCH, CASE, DEFAULT, MAIN, DefAsignarArray, IncrementoCiclo, ExpAritmeticaBoolP,
+nonterminal TipoDato, PROGRAMA,
+    DECLARACIONES, Declaracion, Declaracion_Specs, Init_Declarador_Lista, Init_Declarador, Declarador,
+    Asignar_Expresion, ExpLogica_OR, ExpLogica_AND, ExpOr, ExpAnd, ExpIgualdad, ExpRelacional, ExpAditiva,
+    ExpMultiplicativa, Inicializador, Inicializador_lista, ExpUnaria, ExpPostfija, ExpPrimaria, Exp,
+    Operador_Asignacion, DeclaracionFuncion, Declaracion_Lista, DeclaracionCompuesta, Lista_Statement,
+    Statement, Statement_Label, ExpStatement, SeleccionStatement, IteracionStatement, JumpStatement,
+    SeleccionStatementElse, ExpConst, ExpCondicional, Parametros_Lista, seleccionStatementIFElse,
+    seleccionStatementIF, DeclaracionParametros, Declarador_Abstracto, Lista_Identificador,
+    WriteStatement, ReadStatement
 
-    PROGRAMA,
-    DECLARACIONES, Declaracion_Func, Declaracion, Declaracion_Specs, Clase_Specs, TipoCalificador,
-    Init_Declarador_Lista, Init_Declarador, Declarador, Asignar_Expresion, ExpLogica_OR, ExpLogica_AND,
-    ExpOr, ExpAnd, ExpIgualdad, ExpRelacional, ExpAditiva, ExpMultiplicativa, ExpCastear, Inicializador,
-    Inicializador_lista, ExpUnaria, ExpPostfija, ExpPrimaria, Exp, Operador_Asignacion, DeclaracionFuncion,
-    Declaracion_Lista, DeclaracionCompuesta, Lista_Statement, Statement, Statement_Label, ExpStatement,
-    SeleccionStatement, IteracionStatement, JumpStatement, SeleccionStatementElse, ExpConst, ExpCondicional,
-    Parametros_Lista, seleccionStatementIFElse, seleccionStatementIF, DeclaracionParametros, Declarador_Abstracto,
-    Lista_Identificador
+
 
     ;
 /*Presedencia*/
@@ -275,7 +292,8 @@ SeleccionStatement ::= seleccionStatementIF
 seleccionStatementIF ::=If ParentesisIzq Exp:e ParentesisDer Statement:s1 seleccionStatementIFElse; //SeleccionStatementElse
 seleccionStatementIFElse ::= Else Statement:s2;
 
-//------
+
+
 // ::= Else Statement:s2 | DECLARACIONES ;// TENER CUIDADO
 
 IteracionStatement ::= While ParentesisIzq Exp:e ParentesisDer Statement:s
@@ -291,9 +309,15 @@ Statement ::=
 	| SeleccionStatement:ss
 	| IteracionStatement:is
 	| JumpStatement:js
+	| ReadStatement:rs
+	| WriteStatement:ws
 	;
 
 JumpStatement ::= Continue PuntoComa
     | Break PuntoComa
     | Return PuntoComa
     | Return Exp:e PuntoComa;
+
+ReadStatement ::= Read ParentesisIzq ExpStatement:es ParentesisDer;
+
+WriteStatement ::= Write ParentesisIzq Exp:e ParentesisDer;
