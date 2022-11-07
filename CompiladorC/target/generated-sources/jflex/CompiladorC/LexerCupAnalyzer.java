@@ -999,6 +999,8 @@ public class LexerCupAnalyzer implements java_cup.runtime.Scanner {
               return symbol(ParserSym.Case, yytext());
             case "char":
                 return symbol(ParserSym.Char, yytext());
+            case "const":
+                return symbol(ParserSym.Const, yytext());
             case "continue":
                 return symbol(ParserSym.Continue, yytext());
             case "default":

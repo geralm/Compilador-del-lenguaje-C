@@ -1041,10 +1041,6 @@ public class LexerCupAnalyzer implements java_cup.runtime.Scanner {
                 return symbol(ParserSym.Struct, yytext());
             case "switch":
                 return symbol(ParserSym.Switch, yytext());
-            case "break":
-                return symbol(ParserSym.Break, yytext());
-            case "case":
-              return symbol(ParserSym.Case, yytext());
             case "typedef":
                 return symbol(ParserSym.Typedef, yytext());
             case "union":

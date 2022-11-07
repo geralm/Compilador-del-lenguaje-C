@@ -20,7 +20,7 @@ parser code
 /*Terminales*/
 
 terminal OPERADOR, PALABRA_RESERVADA, LITERAL, IDENTIFICADOR,
-     Auto, Break, Case, Char, Continue, Default, Do, Double, Else, Enum, Extern, Float, For, Goto,
+     Auto, Break, Case, Char, Const, Continue, Default, Do, Double, Else, Enum, Extern, Float, For, Goto,
      If, Int, Long, Register, Return, Short, Signed, Sizeof, Static, Struct, Switch,
      Typedef, Union, Unsigned, Void, Volatile, While, Mas, Menos, Multiplicacion, Division, Decremento,
      Incremento, Igual, DobleIgual, MayorIgual, Mayor, MenorIgual, Menor, Diferente, OrDoble, AndDoble, Not, Coma,
@@ -51,14 +51,18 @@ precedence left Division;*/
 
 start with PROGRAMA;
 
-PROGRAMA ::= TipoDato IDENTIFICADOR Igual LITERAL PuntoComa;
+//PROGRAMA ::= TipoDato IDENTIFICADOR Igual LITERAL PuntoComa;
+
+
+
+
+PROGRAMA ::= DeclaracionVariable PROGRAMA | DeclaracionVariable
+    /*| DeclaracionFuncion PROGRAMA
+    | DeclaracionFuncionVoid PROGRAMA
+    | DeclaracionFuncion
+    | DeclaracionFuncionVoid */;
 
 TipoDato ::= Char | Int | Long | Short;
-
-/*
-PROGRAMA ::= DeclaracionVariable PROGRAMA | DeclaracionVariable;
-    //| DeclaracionFuncion PROGRAMA
-    //| DeclaracionFuncionVoid PROGRAMA;
 
 DeclaracionVariable ::= DeclaracionVariableP
     | Const DeclaracionVariableP;
@@ -68,9 +72,9 @@ DeclaracionVariableP ::= TipoDato NuevaVariable;
 NuevaVariable ::= IDENTIFICADOR MasVariables
     | IDENTIFICADOR Igual LITERAL MasVariables;
 
-MasVariables ::= IDENTIFICADOR MasVariables | Coma IDENTIFICADOR Igual LITERAL MasVariables;//FALTA EPSILON*/
-
-
+MasVariables ::= Coma IDENTIFICADOR MasVariables
+    | Coma IDENTIFICADOR Igual LITERAL MasVariables
+    | PuntoComa {:RESULT = null; :};
 
 //EXAMPLE OF FILE STRUCTURE
 
