@@ -155,7 +155,7 @@ Error = [^]
                 case "^":
                     return symbol(ParserSym.Circunflejo, yytext());
                 case "%":
-                    return symbol(ParserSym.Porcentaje, yytext());
+                    return symbol(ParserSym.Modulo, yytext());
                 case "|":
                     return symbol(ParserSym.Or, yytext());
                 case ">>":
@@ -165,7 +165,7 @@ Error = [^]
                 case "~":
                     return symbol(ParserSym.Tilde, yytext());
                 case "%=":
-                    return symbol(ParserSym.PorcentajeAsignacion, yytext());
+                    return symbol(ParserSym.ModuloAsignacion, yytext());
                 case "&=":
                     return symbol(ParserSym.AndAsignacion, yytext());
                 case "^=":

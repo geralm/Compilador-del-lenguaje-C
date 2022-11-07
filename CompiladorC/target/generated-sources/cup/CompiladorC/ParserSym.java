@@ -20,7 +20,6 @@ public interface ParserSym {
   public static final int RestaAsignacion = 65;
   public static final int CorcheteIzq = 58;
   public static final int DesplazamientoIzquierdaAsignacion = 80;
-  public static final int Porcentaje = 71;
   public static final int Long = 23;
   public static final int Punto = 63;
   public static final int Default = 12;
@@ -30,7 +29,6 @@ public interface ParserSym {
   public static final int For = 19;
   public static final int OPERADOR = 2;
   public static final int Void = 35;
-  public static final int PorcentajeAsignacion = 76;
   public static final int DosPuntos = 62;
   public static final int DobleIgual = 45;
   public static final int Else = 15;
@@ -68,6 +66,7 @@ public interface ParserSym {
   public static final int MayorIgual = 46;
   public static final int EOF = 0;
   public static final int CorcheteDer = 59;
+  public static final int ModuloAsignacion = 76;
   public static final int Double = 14;
   public static final int Struct = 30;
   public static final int Division = 41;
@@ -82,6 +81,7 @@ public interface ParserSym {
   public static final int Float = 18;
   public static final int ParentesisIzq = 56;
   public static final int CircunflejoAsignacion = 78;
+  public static final int Modulo = 71;
   public static final int Register = 24;
   public static final int Not = 53;
   public static final int SignoPregunta = 68;
@@ -163,12 +163,12 @@ public interface ParserSym {
   "SignoPregunta",
   "And",
   "Circunflejo",
-  "Porcentaje",
+  "Modulo",
   "Or",
   "DesplazamientoDerecha",
   "DesplazamientoIzquierda",
   "Tilde",
-  "PorcentajeAsignacion",
+  "ModuloAsignacion",
   "AndAsignacion",
   "CircunflejoAsignacion",
   "OrAsignacion",
