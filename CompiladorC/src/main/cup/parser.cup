@@ -38,7 +38,7 @@ nonterminal TipoDato, OpAsignacion,
     NuevaVariable, MasVariables, DeclaracionFuncion, DeclaracionFuncionVoid, Parametros,
     ParametrosAdicionales, CuerpoFunciones, Retornable, CuerpoFuncionesVoid, CUERPO,
     LlamarFunciones, ASIGNACION, VALOR, IF, ELSE, FOR, CuerpoCiclo, WHILE,
-    DoWhile, SWITCH, CASE, DEFAULT, MAIN, DefAsignarArray, IncrementoCiclo;
+    DoWhile, SWITCH, CASE, DEFAULT, MAIN, DefAsignarArray, IncrementoCiclo, ExpAritmeticaBool, ExpAritmeticaBoolP;
 /*Presedencia*/
 /*
 precedence left Suma;
@@ -54,11 +54,11 @@ start with MAIN;
 MAIN ::= DeclaracionVariable MAIN
     | DeclaracionFuncion MAIN
     | DeclaracionFuncionVoid MAIN
-    //| CUERPO MAIN
+    | CUERPO MAIN
     | DeclaracionVariable
     | DeclaracionFuncion
-    | DeclaracionFuncionVoid;
-    //| CUERPO;
+    | DeclaracionFuncionVoid
+    | CUERPO;
 
 //--------------------------------GRAMÁTICAS TIPOS Y OPERADORES--------------------------------
 
@@ -79,13 +79,13 @@ DefAsignarArray ::= LlaveIzq LlaveDer;
 
 //-------------------------------- EXPRESIONES --------------------------------
 
-ExpAritmetica ::= ExpAritmeticaP | ParentesisIzq ExpAritmeticaP ParentesisDer;
-ExpAritmeticaP ::= OpAritmeticoUnario IDENTIFICADOR | LITERAL;// | ExpAritmetica OpAritmeticoBinario ExpAritmetica;
+ExpAritmetica ::= ExpAritmeticaBoolP | ParentesisIzq ExpAritmeticaBoolP ParentesisDer;
+ExpAritmeticaBoolP ::= OpAritmeticoUnario IDENTIFICADOR | LITERAL | LITERAL OpAritmeticoBinario ExpAritmetica | LITERAL OpBoolBinario ExpBool;
 
 
-ExpBool ::= OpBoolUnario ExpBoolP;
-ExpBoolP ::= ParentesisIzq ExpBoolPP ParentesisDer | ExpBoolPP;
-ExpBoolPP ::= OpAritmeticoUnario IDENTIFICADOR | LITERAL | ExpBool OpBoolBinario ExpBool; //EXPARITMETICA DABA MUCHOS ERRORES LA QUITE, NC QUE HACE
+ExpBool ::= OpBoolUnario ExpAritmetica | ExpAritmetica;
+//ExpBoolP ::= ParentesisIzq ExpAritmeticaBoolP ParentesisDer | ExpAritmeticaBoolP;
+//ExpBoolPP ::= OpAritmeticoUnario IDENTIFICADOR | LITERAL | LITERAL OpBoolBinario ExpBool; //EXPARITMETICA DABA MUCHOS ERRORES LA QUITE, NC QUE HACE
 
 //DECLARACIÓN VARIABLES
 DeclaracionVariable ::= DeclaracionVariableP
@@ -134,14 +134,14 @@ DEFAULT ::= CASE | Default DosPuntos CUERPO Break PuntoComa;
 
 CUERPO ::= IDENTIFICADOR PuntoComa
     //| LITERAL PuntoComa
-    | ExpAritmetica PuntoComa
+    //| ExpAritmetica PuntoComa
     | ExpBool PuntoComa
     | IF
     | FOR
     | WHILE
     | DoWhile
     | SWITCH
-    | DeclaracionVariable
+    //| DeclaracionVariable
     | ASIGNACION
     | LlamarFunciones;
 
