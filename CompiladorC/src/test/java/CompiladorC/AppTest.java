@@ -19,8 +19,8 @@ public class AppTest
     @Test
     public void parserAnaylysis()throws Exception
     {
-        //String expresion = "int i = 5, j[2] = {}, l[2],s ,a, s;\nint i = 5, j, l ,s ,a, s;";
-        String expresion = "int  i = 5;";
+        //String expresion = "int prueba(){if (a == b){int hola = 0; for(i = 0; i < 5; i++){}}else{} return 0;}";
+        String expresion = "static int prueba(){if (a == b){int hola = 0; while(i < 5){}}else{} return 0;}";
         LexerCupAnalyzer lexer = new LexerCupAnalyzer(new StringReader(expresion));
         Parser p = new Parser(lexer);
         //Integer resultado = (Integer) p.parse().value;

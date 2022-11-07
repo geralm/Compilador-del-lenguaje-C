@@ -1,25 +1,67 @@
 package CompiladorC;
 
 import java_cup.runtime.*;
-
+import java.io.*;
+import java.util.*;
+import java_cup.runtime.XMLElement.*;
+import javax.xml.stream.*;
+import javax.xml.transform.*;
+import javax.xml.transform.stream.*;
 
 
 class Parser;
 
-/*
-parser code
-{:
-    private Symbol s;
-
-    public void syntax_error(Symbol s){
-        this.s = s;
+parser code {:
+    public void syntax_error(Symbol cur_token){
+	System.err.println("Syntax error at "+cur_token);
+    }
+    public static void newScope(){
+	typenames.push(new HashSet<String>());
+    }
+    public static void deleteScope(){
+	typenames.pop();
+    }
+    public static boolean lookupType(String name){
+	for (HashSet<String> scope: typenames)
+	    if (scope.contains(name)) return true;
+	return false;
+    }
+    public static void addType(String name){
+	typenames.peek().add(name);
+    }
+    public static LinkedList<HashSet<String>> typenames = new LinkedList<HashSet<String>>();
+    public Parser(LexerCupAnalyzer lex, ComplexSymbolFactory sf) {
+	super(lex,sf);
     }
 
-    public Symbol getS(){
-        return this.s;
+    public static void main(String args[]) {
+	try {
+	    ComplexSymbolFactory csf = new ComplexSymbolFactory();
+	    // create a buffering scanner wrapper
+	   String expresion = "int prueba(){if (a == b){int hola = 0;}else{} return 0;};";
+       LexerCupAnalyzer lexer = new LexerCupAnalyzer(new StringReader(expresion));
+	    // start parsing
+	    Parser p = new Parser(lexer,csf);
+	    System.out.println("Parser runs: ");
+	    newScope();
+	    XMLElement e = (XMLElement)p.parse().value;/*
+	    // create XML output file
+	    XMLOutputFactory outFactory = XMLOutputFactory.newInstance();
+	    XMLStreamWriter sw = outFactory.createXMLStreamWriter(new FileOutputStream(args[1]));
+	    // dump XML output to the file
+	    XMLElement.dump(lexer,sw,e); //,"expr","stmt");
+	    // transform the parse tree into an AST and a rendered HTML version
+	    Transformer transformer = TransformerFactory.newInstance()
+		.newTransformer(new StreamSource(new File("tree.xsl")));
+	    Source text = new StreamSource(new File(args[1]));
+	    transformer.transform(text, new StreamResult(new File("output.html")));
+*/
+	    System.out.println("Parsing finished!");
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
     }
 :};
-*/
 /*Terminales*/
 
 terminal OPERADOR, PALABRA_RESERVADA, LITERAL, IDENTIFICADOR,
@@ -38,23 +80,27 @@ terminal OPERADOR, PALABRA_RESERVADA, LITERAL, IDENTIFICADOR,
 nonterminal TipoDato, OpAsignacion,
     OpAritmeticoUnario, OpAritmeticoBinario, OpBoolBinario, OpBoolUnario, ExpAritmetica,
     ExpAritmeticaP, ExpBool, ExpBoolP, ExpBoolPP, DeclaracionVariable, DeclaracionVariableP,
-    NuevaVariable, MasVariables, DeclaracionFuncion, DeclaracionFuncionVoid, Parametros,
+    NuevaVariable, MasVariables, DeclaracionFuncionVoid, Parametros,
     ParametrosAdicionales, CuerpoFunciones, Retornable, CuerpoFuncionesVoid, CUERPO,
     LlamarFunciones, ASIGNACION, VALOR, IF, ELSE, FOR, CuerpoCiclo, WHILE,
-    DoWhile, SWITCH, CASE, DEFAULT, MAIN, DefAsignarArray, IncrementoCiclo, ExpAritmeticaBoolP,
+    DoWhile, SWITCH, CASE, DEFAULT, MAIN, DefAsignarArray, IncrementoCiclo, ExpAritmeticaBoolP, seleccionStatementIFElse,
+    seleccionStatementIF,
+
     PROGRAMA,
     DECLARACIONES, Declaracion_Func, Declaracion, Declaracion_Specs, Clase_Specs, TipoCalificador,
     Init_Declarador_Lista, Init_Declarador, Declarador, Asignar_Expresion, ExpLogica_OR, ExpLogica_AND,
     ExpOr, ExpAnd, ExpIgualdad, ExpRelacional, ExpAditiva, ExpMultiplicativa, ExpCastear, Inicializador,
-    Inicializador_lista, ExpUnaria, ExpPostfija, ExpPrimaria, Exp, Operador_Asignacion
+    Inicializador_lista, ExpUnaria, ExpPostfija, ExpPrimaria, Exp, Operador_Asignacion, DeclaracionFuncion,
+    Declaracion_Lista, DeclaracionCompuesta, Lista_Statement, Statement, Statement_Label, ExpStatement,
+    SeleccionStatement, IteracionStatement, JumpStatement, SeleccionStatementElse, ExpConst, ExpCondicional
 
     ;
 /*Presedencia*/
-/*
-precedence left Suma;
-precedence left Resta;
-precedence left Multiplicacion;
-precedence left Division;*/
+
+
+//precedence left Resta;
+//precedence left Multiplicacion;
+//precedence left Division;
 
 
 /*Gramáticas*/
@@ -66,14 +112,12 @@ start with PROGRAMA;
 Declaracion ::= Declaracion_Specs PuntoComa
     | Declaracion_Specs Init_Declarador_Lista PuntoComa;
 
-TipoDato ::= Char:tipo | Int:tipo | Long:tipo | Short:tipo;
+TipoDato ::= Char:tipo | Int:tipo | Long:tipo | Short:tipo | Void:tipo;
 
-Declaracion_Specs ::= //Clase_Specs:cs
-    Clase_Specs:cs Declaracion_Specs:ds
-    | TipoDato:ts
-    //| TipoDato:ts Declaracion_Specs:ds
-    //| TipoCalificador:tq;
-    | TipoCalificador:tq Declaracion_Specs:ds;
+Declaracion_Specs ::=
+    Const:tipo Declaracion_Specs:ds
+    | Static:tipo Declaracion_Specs:ds
+    | TipoDato:ts;
 
 Init_Declarador_Lista ::=Init_Declarador:id
 	| Init_Declarador_Lista:idl Coma Init_Declarador:id
@@ -84,7 +128,7 @@ Init_Declarador ::=Declarador:d
 
 Declarador ::=IDENTIFICADOR:identifier
 	| ParentesisIzq Declarador:dd ParentesisDer
-	//| Declarador:dd CorcheteIzq constant_expression:ce CorcheteDer
+	| Declarador:dd CorcheteIzq ExpConst:ce CorcheteDer
 	| Declarador:dd CorcheteIzq CorcheteDer
 	//| Declarador:dd ParentesisIzq parameter_type_list:ptl ParentesisDer
 	//| Declarador:dd ParentesisIzq identifier_list:il ParentesisDer
@@ -99,7 +143,7 @@ Inicializador ::=Asignar_Expresion:ae
 Inicializador_lista ::=Inicializador:i
 	| Inicializador_lista:il Coma Inicializador:i;
 
-Asignar_Expresion ::= ExpLogica_OR:or
+Asignar_Expresion ::= ExpCondicional:ec
       | ExpUnaria:ue Operador_Asignacion:aop Asignar_Expresion:ae
       ;
 
@@ -112,6 +156,8 @@ Operador_Asignacion ::=Igual
 	//| MenorIgual
 	//| MayorIgual;
 
+ExpCondicional ::= ExpLogica_OR:elo
+    | ExpLogica_OR:elo SignoPregunta Exp:e DosPuntos ExpCondicional:ec;
 
 ExpLogica_OR ::= ExpLogica_AND:ela
     | ExpLogica_OR:elo OrDoble:op ExpLogica_AND;
@@ -162,6 +208,8 @@ ExpPostfija ::= ExpPrimaria:ep
 Exp ::= Asignar_Expresion:ae
 	   | Exp:e Coma Asignar_Expresion:ae;
 
+ExpConst ::= ExpCondicional:ec;
+
 ExpPrimaria ::= IDENTIFICADOR:ident
     | Const:constant
     | LITERAL:literal
@@ -170,4 +218,61 @@ ExpPrimaria ::= IDENTIFICADOR:ident
 PROGRAMA ::= DECLARACIONES
 	| PROGRAMA DECLARACIONES;
 
-DECLARACIONES ::= Declaracion;
+DECLARACIONES ::= Declaracion
+    |   DeclaracionFuncion;
+
+Declaracion_Lista ::= Declaracion:d
+    | Declaracion_Lista:dl Declaracion;
+
+DeclaracionFuncion ::= Declaracion_Specs:ds Declarador:d Declaracion_Lista:dl {: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
+    | Declaracion_Specs:ds Declarador:d {: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
+    | Declarador:d Declaracion_Lista:dl {: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
+    | Declarador:d {: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
+    | DeclaracionCompuesta:d
+    ;
+
+
+Lista_Statement ::=Statement:s
+	| Lista_Statement:ls Statement:s;
+
+
+DeclaracionCompuesta ::=LlaveIzq LlaveDer
+    | LlaveIzq Lista_Statement:ls LlaveDer
+	| LlaveIzq Declaracion_Lista:dl LlaveDer
+	| LlaveIzq Declaracion_Lista:dl Lista_Statement:ls LlaveDer;
+
+ExpStatement ::= PuntoComa
+    | Exp:e PuntoComa;
+
+Statement_Label ::= IDENTIFICADOR:id DosPuntos Statement:s
+    | Case ExpConst:ec DosPuntos Statement:s
+    | Default DosPuntos Statement:s;
+
+// ---------Problema del if else
+SeleccionStatement ::= seleccionStatementIF
+    | Switch ParentesisIzq Exp:e ParentesisDer Statement:s;
+seleccionStatementIF ::=If ParentesisIzq Exp:e ParentesisDer Statement:s1 seleccionStatementIFElse; //SeleccionStatementElse
+seleccionStatementIFElse ::= Else Statement:s2;
+
+//------
+// ::= Else Statement:s2 | DECLARACIONES ;// TENER CUIDADO
+
+IteracionStatement ::= While ParentesisIzq Exp:e ParentesisDer Statement:s
+    | Do Statement:s While ParentesisIzq Exp:e ParentesisDer PuntoComa
+    | For ParentesisIzq ExpStatement:es1 ExpStatement:es2 ParentesisDer Statement:s
+    | For ParentesisIzq ExpStatement:es1 ExpStatement:es2 Exp:e ParentesisDer Statement:s;
+
+
+Statement ::=
+    Statement_Label:sl
+    | {: Parser.newScope(); :}  DeclaracionCompuesta:cs {: Parser.deleteScope(); :}
+	| ExpStatement:es
+	| SeleccionStatement:ss
+	| IteracionStatement:is
+	| JumpStatement:js
+	;
+
+JumpStatement ::= Continue PuntoComa
+    | Break PuntoComa
+    | Return PuntoComa
+    | Return Exp:e PuntoComa;

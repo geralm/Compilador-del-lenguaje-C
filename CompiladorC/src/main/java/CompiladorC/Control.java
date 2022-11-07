@@ -9,13 +9,13 @@ import java.util.ArrayList;
 public class Control {
     public LexerGui screen;
     private ControlLexer controlLexer;
-    private ControlParser controlParser;
+    //private ControlParser controlParser;
     //private ControlSemantic controlSemantic;
 
     public Control(LexerGui screen) {
         this.screen =screen;
         controlLexer = new ControlLexer();
-        controlParser = new ControlParser();
+        //controlParser = new ControlParser();
 
     }
 
@@ -55,7 +55,7 @@ public class Control {
 
     public void parsear(String cadena){
         LexerCupAnalyzer lexer = new LexerCupAnalyzer(new StringReader(cadena));
-        controlParser.procesar(lexer);
+        //controlParser.procesar(lexer);
         //colocarErroresSintacticos();
     }
     /*-----------------------------------------------------------------------------------------------------------------

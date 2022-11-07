@@ -1,5 +1,5 @@
 package CompiladorC;
-
+/*
 import java_cup.runtime.Symbol;
 import java_cup.symbol;
 
@@ -36,4 +36,4 @@ public class ControlParser implements IControl <LexerCupAnalyzer>{
     public DefaultTableModel construirModelo(JTable tabla) {
         throw new UnsupportedOperationException();
     }
-}
+}*/
