@@ -83,8 +83,7 @@ nonterminal TipoDato, OpAsignacion,
     NuevaVariable, MasVariables, DeclaracionFuncionVoid, Parametros,
     ParametrosAdicionales, CuerpoFunciones, Retornable, CuerpoFuncionesVoid, CUERPO,
     LlamarFunciones, ASIGNACION, VALOR, IF, ELSE, FOR, CuerpoCiclo, WHILE,
-    DoWhile, SWITCH, CASE, DEFAULT, MAIN, DefAsignarArray, IncrementoCiclo, ExpAritmeticaBoolP, seleccionStatementIFElse,
-    seleccionStatementIF,
+    DoWhile, SWITCH, CASE, DEFAULT, MAIN, DefAsignarArray, IncrementoCiclo, ExpAritmeticaBoolP,
 
     PROGRAMA,
     DECLARACIONES, Declaracion_Func, Declaracion, Declaracion_Specs, Clase_Specs, TipoCalificador,
@@ -92,7 +91,9 @@ nonterminal TipoDato, OpAsignacion,
     ExpOr, ExpAnd, ExpIgualdad, ExpRelacional, ExpAditiva, ExpMultiplicativa, ExpCastear, Inicializador,
     Inicializador_lista, ExpUnaria, ExpPostfija, ExpPrimaria, Exp, Operador_Asignacion, DeclaracionFuncion,
     Declaracion_Lista, DeclaracionCompuesta, Lista_Statement, Statement, Statement_Label, ExpStatement,
-    SeleccionStatement, IteracionStatement, JumpStatement, SeleccionStatementElse, ExpConst, ExpCondicional
+    SeleccionStatement, IteracionStatement, JumpStatement, SeleccionStatementElse, ExpConst, ExpCondicional,
+    Parametros_Lista, seleccionStatementIFElse, seleccionStatementIF, DeclaracionParametros, Declarador_Abstracto,
+    Lista_Identificador
 
     ;
 /*Presedencia*/
@@ -130,10 +131,30 @@ Declarador ::=IDENTIFICADOR:identifier
 	| ParentesisIzq Declarador:dd ParentesisDer
 	| Declarador:dd CorcheteIzq ExpConst:ce CorcheteDer
 	| Declarador:dd CorcheteIzq CorcheteDer
-	//| Declarador:dd ParentesisIzq parameter_type_list:ptl ParentesisDer
-	//| Declarador:dd ParentesisIzq identifier_list:il ParentesisDer
+	| Declarador:dd ParentesisIzq Parametros_Lista:pl ParentesisDer
+	| Declarador:dd ParentesisIzq Lista_Identificador:li ParentesisDer
 	| Declarador:dd ParentesisIzq ParentesisDer;
 
+Parametros_Lista ::= DeclaracionParametros:dp
+                    	| Parametros_Lista:pl Coma DeclaracionParametros:dp;
+
+DeclaracionParametros ::=Declaracion_Specs:ds Declarador:d
+	| Declaracion_Specs:ds Declarador_Abstracto:ad
+	| Declaracion_Specs:ds
+	;
+
+Declarador_Abstracto ::= ParentesisIzq:id Declarador_Abstracto:ad ParentesisDer
+	| CorcheteIzq:id CorcheteDer
+	| CorcheteIzq:id ExpConst:ce CorcheteDer
+	| Declarador_Abstracto:dad CorcheteIzq:id CorcheteDer
+	| Declarador_Abstracto:dad CorcheteIzq:id ExpConst:ce CorcheteDer
+	| ParentesisIzq:id ParentesisDer
+	| ParentesisIzq:id Parametros_Lista:ptl ParentesisDer
+	| Declarador_Abstracto:dad ParentesisIzq:id ParentesisDer
+	| Declarador_Abstracto:dad ParentesisIzq:id Parametros_Lista:ptl ParentesisDer;
+
+Lista_Identificador ::=IDENTIFICADOR:id
+	| Lista_Identificador:li Coma IDENTIFICADOR:id;
 
 Inicializador ::=Asignar_Expresion:ae
 	| LlaveIzq Inicializador_lista:il LlaveDer
