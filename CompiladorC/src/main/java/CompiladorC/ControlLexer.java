@@ -1,5 +1,7 @@
 package CompiladorC;
 
+import java_cup.runtime.Symbol;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
@@ -8,9 +10,9 @@ import java.util.ArrayList;
 
 public class ControlLexer implements IControl <String>{
     private ArrayList<Token> listaTokens;
-
+    LexerAnalyzer demoLexer;
     public ControlLexer() {
-        listaTokens = new ArrayList<Token>();
+        listaTokens = new ArrayList<>();
     }
     @Override
     public void limpiar() {
@@ -18,11 +20,14 @@ public class ControlLexer implements IControl <String>{
     }
     @Override
     public void procesar(String cadena){
-        LexerAnalyzer demoLexer  = new LexerAnalyzer(new StringReader(cadena));
+        demoLexer  = new LexerAnalyzer(new StringReader(cadena));
         try {
             Token token = demoLexer.yylex();
             while (token.getType() != TokensConstants.EOF) {
-                listaTokens.add(token);
+                if (token.getType() == TokensConstants.ERROR) {//si es un error léxico lo agrego a la lista de errores
+                    listaTokens.add(token);
+                    System.out.println("Error léxico: " + token.toString());
+                }
                 token = demoLexer.yylex();
                 System.out.println(token.toString());
             }

@@ -2,7 +2,10 @@ package CompiladorC;
 
 import java_cup.runtime.*;
 
+
+
 class Parser;
+
 /*
 parser code
 {:
@@ -15,8 +18,8 @@ parser code
     public Symbol getS(){
         return this.s;
     }
-:};*/
-
+:};
+*/
 /*Terminales*/
 
 terminal OPERADOR, PALABRA_RESERVADA, LITERAL, IDENTIFICADOR,

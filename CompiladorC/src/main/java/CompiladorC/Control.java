@@ -53,8 +53,9 @@ public class Control {
      * ----------------------------------------------------------------------------------------------------------------*/
 
 
-    public void parsear(){
-        //controlParser.procesar(controlLexer.getListaTokens());
+    public void parsear(String cadena){
+        LexerCupAnalyzer lexer = new LexerCupAnalyzer(new StringReader(cadena));
+        controlParser.procesar(lexer);
         //colocarErroresSintacticos();
     }
     /*-----------------------------------------------------------------------------------------------------------------

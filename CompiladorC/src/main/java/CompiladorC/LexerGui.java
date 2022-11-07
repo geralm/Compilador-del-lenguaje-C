@@ -113,6 +113,13 @@ public class LexerGui extends JFrame  {
                 }
             }
         });
+        buttonParsear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String cadena = textArea.getText().trim();
+                control.parsear(cadena);
+            }
+        });
     }
 
     public String getArchivo(){
