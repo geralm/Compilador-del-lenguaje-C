@@ -38,7 +38,7 @@ nonterminal TipoDato, OpAsignacion,
     NuevaVariable, MasVariables, DeclaracionFuncion, DeclaracionFuncionVoid, Parametros,
     ParametrosAdicionales, CuerpoFunciones, Retornable, CuerpoFuncionesVoid, CUERPO,
     LlamarFunciones, ASIGNACION, VALOR, IF, ELSE, FOR, CuerpoCiclo, WHILE,
-    DoWhile, SWITCH, CASE, DEFAULT, MAIN, DefAsignarArray, IncrementoCiclo, ExpAritmeticaBool, ExpAritmeticaBoolP;
+    DoWhile, SWITCH, CASE, DEFAULT, MAIN, DefAsignarArray, IncrementoCiclo, ExpAritmeticaBoolP;
 /*Presedencia*/
 /*
 precedence left Suma;
@@ -103,7 +103,7 @@ MasVariables ::= Coma IDENTIFICADOR MasVariables
 DeclaracionFuncion ::= TipoDato IDENTIFICADOR ParentesisIzq Parametros PuntoComa //QUITÉ PARENTESIS DERECHO PARA PODER USAR EPSILON
     | TipoDato IDENTIFICADOR ParentesisIzq Parametros ParentesisDer LlaveIzq CuerpoFunciones LlaveDer;
 DeclaracionFuncionVoid ::= Void IDENTIFICADOR ParentesisIzq Parametros PuntoComa //QUITÉ PARENTESIS DERECHO PARA PODER USAR EPSILON
-    | Void IDENTIFICADOR ParentesisIzq Parametros ParentesisDer LlaveIzq CuerpoFunciones LlaveDer;
+    | Void IDENTIFICADOR ParentesisIzq Parametros ParentesisDer LlaveIzq CuerpoFuncionesVoid LlaveDer;
 Parametros ::= TipoDato IDENTIFICADOR ParametrosAdicionales | ParentesisDer {: RESULT = null; :};
 ParametrosAdicionales ::= Coma TipoDato IDENTIFICADOR ParametrosAdicionales  | ParentesisDer {: RESULT = null; :};
 CuerpoFunciones ::= CUERPO Return Retornable PuntoComa;
