@@ -28,7 +28,12 @@
       <version>5.8.2</version>
       <scope>test</scope>
     </dependency>
-
+    <dependency>
+      <groupId>com.github.vbmacher</groupId>
+      <artifactId>java-cup</artifactId>
+      <version>11b-20160615-1</version>
+      <type>jar</type>
+    </dependency>
   </dependencies>
 
   <build>

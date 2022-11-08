@@ -1,0 +1,176 @@
+package CompiladorC;
+
+import java_cup.runtime.*;
+
+class Parser;
+/*
+parser code
+{:
+    private Symbol s;
+
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+    }
+:};*/
+
+/*Terminales*/
+
+terminal OPERADOR, PALABRA_RESERVADA, LITERAL, IDENTIFICADOR,
+     Auto, Break, Case, Char, Const, Continue, Default, Do, Double, Else, Enum, Extern, Float, For, Goto,
+     If, Int, Long, Register, Return, Short, Signed, Sizeof, Static, Struct, Switch,
+     Typedef, Union, Unsigned, Void, Volatile, While, Mas, Menos, Multiplicacion, Division, Decremento,
+     Incremento, Igual, DobleIgual, MayorIgual, Mayor, MenorIgual, Menor, Diferente, OrDoble, AndDoble, Not, Coma,
+     PuntoComa, ParentesisIzq, ParentesisDer, CorcheteIzq, CorcheteDer, LlaveIzq, LlaveDer, DosPuntos,
+     Punto, SumaAsignacion, RestaAsignacion, MultiplicacionAsignacion, DivisionAsignacion, SignoPregunta,
+     And, Circunflejo, Modulo, Or, DesplazamientoDerecha, DesplazamientoIzquierda, Tilde, ModuloAsignacion,
+     AndAsignacion, CircunflejoAsignacion, OrAsignacion, DesplazamientoIzquierdaAsignacion,
+     DesplazamientoDerechaAsignacion, Flecha;
+
+/*No Terminales*/
+
+nonterminal TipoDato, OpAsignacion,
+    OpAritmeticoUnario, OpAritmeticoBinario, OpBoolBinario, OpBoolUnario, ExpAritmetica,
+    ExpAritmeticaP, ExpBool, ExpBoolP, ExpBoolPP, DeclaracionVariable, DeclaracionVariableP,
+    NuevaVariable, MasVariables, DeclaracionFuncion, DeclaracionFuncionVoid, Parametros,
+    ParametrosAdicionales, CuerpoFunciones, Retornable, CuerpoFuncionesVoid, CUERPO,
+    LlamarFunciones, ASIGNACION, VALOR, IF, ELSE, FOR, CuerpoCiclo, WHILE,
+    DoWhile, SWITCH, CASE, DEFAULT, MAIN, DefAsignarArray, IncrementoCiclo, ExpAritmeticaBoolP;
+/*Presedencia*/
+/*
+precedence left Suma;
+precedence left Resta;
+precedence left Multiplicacion;
+precedence left Division;*/
+
+
+/*Gramáticas*/
+
+start with MAIN;
+
+MAIN ::= DeclaracionVariable MAIN
+    | DeclaracionFuncion MAIN
+    | DeclaracionFuncionVoid MAIN
+    | CUERPO MAIN
+    | DeclaracionVariable
+    | DeclaracionFuncion
+    | DeclaracionFuncionVoid
+    | CUERPO;
+
+//--------------------------------GRAMÁTICAS TIPOS Y OPERADORES--------------------------------
+
+TipoDato ::= Char | Int | Long | Short;
+
+OpAsignacion ::= Igual | SumaAsignacion | RestaAsignacion | MultiplicacionAsignacion | DivisionAsignacion;
+
+OpAritmeticoUnario ::= Incremento | Decremento;
+
+OpAritmeticoBinario ::= Mas | Menos | Multiplicacion | Division | Modulo;
+
+OpBoolUnario ::= Not;
+
+OpBoolBinario ::= DobleIgual | Diferente | Menor | Mayor | MayorIgual | MenorIgual | AndDoble | OrDoble;
+
+DefAsignarArray ::= LlaveIzq LlaveDer;
+//NO ASIGNA
+
+//-------------------------------- EXPRESIONES --------------------------------
+
+ExpAritmetica ::= ExpAritmeticaBoolP | ParentesisIzq ExpAritmeticaBoolP ParentesisDer;
+ExpAritmeticaBoolP ::= OpAritmeticoUnario IDENTIFICADOR | LITERAL | LITERAL OpAritmeticoBinario ExpAritmetica | LITERAL OpBoolBinario ExpBool
+    | IDENTIFICADOR OpAritmeticoBinario ExpAritmetica | IDENTIFICADOR OpBoolBinario ExpBool;
+
+
+ExpBool ::= OpBoolUnario ExpAritmetica | ExpAritmetica;
+//ExpBoolP ::= ParentesisIzq ExpAritmeticaBoolP ParentesisDer | ExpAritmeticaBoolP;
+//ExpBoolPP ::= OpAritmeticoUnario IDENTIFICADOR | LITERAL | LITERAL OpBoolBinario ExpBool; //EXPARITMETICA DABA MUCHOS ERRORES LA QUITE, NC QUE HACE
+
+//DECLARACIÓN VARIABLES
+DeclaracionVariable ::= DeclaracionVariableP
+    | Const DeclaracionVariableP;
+DeclaracionVariableP ::= TipoDato NuevaVariable;
+NuevaVariable ::= IDENTIFICADOR MasVariables
+    | IDENTIFICADOR Igual LITERAL MasVariables;
+MasVariables ::= Coma IDENTIFICADOR MasVariables
+    | Coma IDENTIFICADOR Igual LITERAL MasVariables
+    | Coma IDENTIFICADOR CorcheteIzq LITERAL CorcheteDer MasVariables
+    | Coma IDENTIFICADOR CorcheteIzq LITERAL CorcheteDer Igual DefAsignarArray MasVariables//ASIGNA VACÍO
+    | PuntoComa {:RESULT = null; :};
+
+//DECLARACIÓM FUNCIONES
+DeclaracionFuncion ::= TipoDato IDENTIFICADOR ParentesisIzq Parametros PuntoComa //QUITÉ PARENTESIS DERECHO PARA PODER USAR EPSILON
+    | TipoDato IDENTIFICADOR ParentesisIzq Parametros  LlaveIzq CuerpoFunciones LlaveDer;
+DeclaracionFuncionVoid ::= Void IDENTIFICADOR ParentesisIzq Parametros PuntoComa //QUITÉ PARENTESIS DERECHO PARA PODER USAR EPSILON
+    | Void IDENTIFICADOR ParentesisIzq Parametros  LlaveIzq CuerpoFuncionesVoid LlaveDer;
+Parametros ::= TipoDato IDENTIFICADOR ParametrosAdicionales | ParentesisDer {: RESULT = null; :};
+ParametrosAdicionales ::= Coma TipoDato IDENTIFICADOR ParametrosAdicionales  | ParentesisDer {: RESULT = null; :};
+CuerpoFunciones ::= CUERPO Return Retornable PuntoComa;
+CuerpoFuncionesVoid ::= CUERPO;
+Retornable ::= IDENTIFICADOR | LITERAL;
+
+//LAMADA A FUNCIONES
+LlamarFunciones ::= IDENTIFICADOR ParentesisIzq Parametros ParentesisDer PuntoComa;
+
+//ASIGNACIÓN DE VARIABLES
+ASIGNACION ::= IDENTIFICADOR OpAsignacion VALOR;
+VALOR ::= ExpAritmetica; //QUITÉ LITERAL, EXPARITMETICA LLEVA EVENTUALMENTE A LITERAL
+
+//IF
+IF ::= If ParentesisIzq ExpBool ParentesisDer LlaveIzq CUERPO ELSE; //QUITÉ Llave DERECHO PARA GENERAR EPSILON
+ELSE ::= LlaveDer {: RESULT = null; :} | Else LlaveIzq CUERPO LlaveDer;
+
+//CICLOS
+FOR ::= For ParentesisIzq TipoDato IDENTIFICADOR Igual LITERAL Coma ExpBool IncrementoCiclo ParentesisDer LlaveIzq CuerpoCiclo LlaveDer;
+IncrementoCiclo ::= OpAritmeticoUnario IDENTIFICADOR | IDENTIFICADOR OpAritmeticoUnario;
+
+WHILE ::= While ParentesisIzq ExpBool ParentesisDer LlaveIzq CuerpoCiclo LlaveDer;
+
+DoWhile ::= Do LlaveIzq CuerpoCiclo LlaveDer While ParentesisIzq ExpBool ParentesisDer PuntoComa;
+
+SWITCH ::= Switch ParentesisIzq IDENTIFICADOR ParentesisDer LlaveIzq CASE LlaveDer;
+CASE ::= Case LITERAL DosPuntos CUERPO Break PuntoComa DEFAULT;
+DEFAULT ::= CASE | Default DosPuntos CUERPO Break PuntoComa;
+
+CUERPO ::= IDENTIFICADOR PuntoComa
+    //| LITERAL PuntoComa
+    //| ExpAritmetica PuntoComa
+    | ExpBool PuntoComa
+    | IF
+    | FOR
+    | WHILE
+    | DoWhile
+    | SWITCH
+    //| DeclaracionVariable
+    | ASIGNACION
+    | LlamarFunciones;
+
+CuerpoCiclo ::= Break PuntoComa | Continue PuntoComa | CUERPO;
+//EXAMPLE OF FILE STRUCTURE
+
+/*
+/*Terminales*/
+/*
+terminal PLUS, TIMES, LPAREN, RPAREN;
+terminal Integer NUMBER;
+*/
+/*No Terminales*/
+/*
+non terminal Integer expr;
+*/
+/*Presedencia*/
+/*
+precedence left PLUS;
+precedence left TIMES;
+*/
+/*Gramáticas*/
+
+//start with expr;
+/*
+expr ::= expr:e1 PLUS expr:e2 {: RESULT = e1 + e2; :}
+      |  expr:e1 TIMES expr:e2 {: RESULT = e1 * e2; :}
+      |  LPAREN expr:e RPAREN  {: RESULT = e; :}
+      |  NUMBER:n              {: RESULT = n; :};
+*/
