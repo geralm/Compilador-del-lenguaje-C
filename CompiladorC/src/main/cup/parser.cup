@@ -9,15 +9,26 @@ import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
 
 
+
 class Parser;
 
 parser code {:
-
+    public ControlParser controlParser;
     public static int errors = 0;
+    public String MSG_ERROR = "";
 
     public void syntax_error(Symbol cur_token){
-	System.err.println("Syntax error at "+cur_token);
+         String msg = "Syntax error at line " + cur_token.left + ", column " + cur_token.right + ".\n" +
+                 "Encountered: " + cur_token.value + "\n" +
+                 "Was expecting one of:\n";
+         System.out.println(msg);
+         controlParser.addError(new ParserError(cur_token, cur_token.left+1, cur_token.right+1,MSG_ERROR));
     }
+
+    public void setControlParser(ControlParser controlParser){
+        this.controlParser = controlParser;
+    }
+
     public static void newScope(){
 	typenames.push(new HashSet<String>());
     }
@@ -33,6 +44,7 @@ parser code {:
 	typenames.peek().add(name);
     }
     public static LinkedList<HashSet<String>> typenames = new LinkedList<HashSet<String>>();
+
     public Parser(LexerCupAnalyzer lex, ComplexSymbolFactory sf) {
 	super(lex,sf);
     }
@@ -68,6 +80,7 @@ parser code {:
     public void report_error(String message, Object info) {
         if (info instanceof String){
     	errors++;
+
           System.err.println("  "+ errors + "==> " + info + " "+ message +
     					"\n       Parsing resumed from 2nd token before" ); //+ s.current_lexeme()+"\n");
         }
@@ -116,7 +129,7 @@ nonterminal TipoDato, PROGRAMA,
 /*Presedencia*/
 
 
-//precedence left Resta;
+precedence left error;
 //precedence left Multiplicacion;
 //precedence left Division;
 
@@ -128,9 +141,9 @@ start with PROGRAMA;
 //DECLARACIONES
 
 Declaracion ::= Declaracion_Specs PuntoComa
-    | Declaracion_Specs Init_Declarador_Lista PuntoComa;
+    | Declaracion_Specs Init_Declarador_Lista PuntoComa ;
 
-TipoDato ::= Char:tipo | Int:tipo | Long:tipo | Short:tipo | Void:tipo;
+TipoDato ::= Char:tipo | Int:tipo | Long:tipo | Short:tipo | Void:tipo ;
 
 Declaracion_Specs ::=
     Const:tipo Declaracion_Specs:ds
@@ -251,13 +264,17 @@ ExpConst ::= ExpCondicional:ec;
 ExpPrimaria ::= IDENTIFICADOR:ident
     | Const:constant
     | LITERAL:literal
-    | ParentesisIzq Exp ParentesisDer;
+    | ParentesisIzq Exp ParentesisDer
+    | error {:MSG_ERROR = "Token inesperado";:} ParentesisIzq;
 
 PROGRAMA ::= DECLARACIONES
-	| PROGRAMA DECLARACIONES;
+	| PROGRAMA DECLARACIONES ;
 
 DECLARACIONES ::= Declaracion
-    |   DeclaracionFuncion;
+    |   DeclaracionFuncion
+    | error {:MSG_ERROR = "Token insperado";:} PuntoComa
+    | error {:MSG_ERROR = "Token inesperado }";:} LlaveIzq
+    | error {:MSG_ERROR = "Se esperaba una }";:} LlaveDer;
 
 Declaracion_Lista ::= Declaracion:d
     | Declaracion_Lista:dl Declaracion;
@@ -267,6 +284,7 @@ DeclaracionFuncion ::= Declaracion_Specs:ds Declarador:d Declaracion_Lista:dl {:
     | Declarador:d Declaracion_Lista:dl {: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
     | Declarador:d {: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
     | DeclaracionCompuesta:d
+
     ;
 
 
@@ -280,7 +298,8 @@ DeclaracionCompuesta ::=LlaveIzq LlaveDer
 	| LlaveIzq Declaracion_Lista:dl Lista_Statement:ls LlaveDer;
 
 ExpStatement ::= PuntoComa
-    | Exp:e PuntoComa;
+    | Exp:e PuntoComa
+    | error {:MSG_ERROR = "Se esperaba otro token";:} PuntoComa;
 
 Statement_Label ::= IDENTIFICADOR:id DosPuntos Statement:s
     | Case ExpConst:ec DosPuntos Statement:s

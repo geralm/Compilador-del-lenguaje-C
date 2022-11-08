@@ -131,6 +131,9 @@ public class LexerGui extends JFrame  {
     public JTable getTablaErroresLexicos() {
         return tablaErroresLexicos;
     }
+    public JTable getTablaErroresSintacticos() {
+        return tableErroresSintacticos;
+    }
 }
 
 

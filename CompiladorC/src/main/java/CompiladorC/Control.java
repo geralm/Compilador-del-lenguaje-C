@@ -9,13 +9,14 @@ import java.util.ArrayList;
 public class Control {
     public LexerGui screen;
     private ControlLexer controlLexer;
+    private ControlParser controlParser;
     //private ControlParser controlParser;
     //private ControlSemantic controlSemantic;
 
     public Control(LexerGui screen) {
         this.screen =screen;
         controlLexer = new ControlLexer();
-        //controlParser = new ControlParser();
+        controlParser = new ControlParser();
 
     }
 
@@ -29,11 +30,12 @@ public class Control {
         //esto no limpia el text area
     }
     public void compilarTodo(String datos){
-        controlLexer.procesar(datos);
-        DefaultTableModel modeloLexico = controlLexer.construirModelo(screen.getTablaErroresLexicos());
+        //lexer
+        screen.limpiarTabla(screen.getTablaErroresLexicos());
+        screen.limpiarTabla(screen.getTableErroresSintacticos());
+        tokenizar(datos);
+        parsear(datos);
 
-        //controlParser.procesar(datos);
-        //colocarErroresSintacticos();
         //controlSemantic.procesar(datos);
         //colocarErroresSemanticos();
     }
@@ -44,6 +46,7 @@ public class Control {
 
     public void tokenizar(String datos){
         controlLexer.limpiar();//esto me evita que los errores se me acumulen en el arraylist
+        screen.limpiarTabla(screen.getTablaErroresLexicos());
         controlLexer.procesar(datos);
         DefaultTableModel model = controlLexer.construirModelo(screen.getTablaErroresLexicos());
         screen.getTablaErroresLexicos().setModel(model);
@@ -54,9 +57,12 @@ public class Control {
 
 
     public void parsear(String cadena){
-        LexerCupAnalyzer lexer = new LexerCupAnalyzer(new StringReader(cadena));
-        //controlParser.procesar(lexer);
-        //colocarErroresSintacticos();
+        controlParser.limpiar();
+        screen.limpiarTabla(screen.getTableErroresSintacticos());
+        LexerCupAnalyzer lexerCupAnalyzer = new LexerCupAnalyzer(new StringReader(cadena));
+        controlParser.procesar(lexerCupAnalyzer);
+        DefaultTableModel modeloSintatico = controlParser.construirModelo(screen.getTableErroresSintacticos());
+        screen.getTablaErroresSintacticos().setModel(modeloSintatico);
     }
     /*-----------------------------------------------------------------------------------------------------------------
      *                               SEMANTIC - ANALIZADOR SEMANTICO
