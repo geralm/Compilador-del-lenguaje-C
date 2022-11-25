@@ -1,7 +1,7 @@
 package CompiladorC;
 
 import java_cup.runtime.Symbol;
-import java_cup.symbol;
+//import java_cup.symbol;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

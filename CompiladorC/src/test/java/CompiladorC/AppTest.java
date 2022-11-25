@@ -21,7 +21,7 @@ public class AppTest
     {
         //String expresion = "int prueba(){if (a == b){int hola = 0; for(i = 0; i < 5; i++){}}else{} return 0;}";
         //String expresion = "int a = 0; ";
-        String expresion = "int a = 0  int hola = 1; int prueba[2] = {1,2}; ";
+        String expresion = "read();";
         //String expresion = "int prueba(){switch(num){case 7: {printf(); break; default: {printf(\"hola\");break;}}}}";
         //String expresion = "i; int prueba(){if (a == b){int hola = 0; for(i = 0; i < 5; i++){}}else{} return 0;}"; //DEBERÍA FALLAR Y SEGUIR
         LexerCupAnalyzer lexer = new LexerCupAnalyzer(new StringReader(expresion));
