@@ -1,7 +1,5 @@
 package Enums;
 
 public enum rsType {
-    ID,
-    TIPO,
-    INSERTARTS
+    ID, TIPO, DO, IF, WHILE, OP , 
 }
