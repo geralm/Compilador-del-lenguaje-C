@@ -32,6 +32,8 @@ public class LexerGui extends JFrame  {
     private JPanel JPanelPrograma;
     private JPanel JPanelCompilador;
     private JButton buttonSalir;
+    private JButton button1;
+    private JButton button2;
 
     private Control control;
 
@@ -40,7 +42,7 @@ public class LexerGui extends JFrame  {
     }
 
     public LexerGui() {
-        this.setContentPane(mainPanel);
+        setContentPane(mainPanel);
         setTitle("Compilador C");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 

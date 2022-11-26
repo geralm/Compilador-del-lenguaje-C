@@ -1,5 +1,7 @@
 package Semantic.TablaSimbolos;
 
+import java_cup.runtime.Symbol;
+
 import java.util.ArrayList;
 
 public class Tabla {
@@ -10,15 +12,23 @@ public class Tabla {
             tabla.add(simbolo);
         }
     }
-    private boolean existe(TSSymbol id) throws ErrorSemantico {
+    public  boolean existe(TSSymbol id) throws ErrorSemantico {
         for (TSSymbol simbolo : tabla) {
-            if (simbolo.getId().equals(id)) {
+            System.out.println("Comparo " + simbolo.getId().value + " con " + id.getId().value);
+            if (simbolo.getId().equals(id.getId())) {
                 throw new ErrorSemantico("Variable ya esta declarada", simbolo);
             }
         }
         return false;
     }
-
+    public boolean existe(Symbol id){
+        for(TSSymbol simbolo : tabla){
+            if(simbolo.getId().value.equals(id.value)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }

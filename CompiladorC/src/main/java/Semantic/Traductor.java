@@ -1,12 +1,15 @@
 package Semantic;
 
+import Semantic.AccionesSemanticas.*;
 import Semantic.TablaSimbolos.ErrorSemantico;
 import Semantic.TablaSimbolos.Tabla;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Traductor {
+     public static  HashMap<AccionSemantica, IAccionSemantica> accionesSemanticas = new HashMap<>();
     private PilaSemantica pilaSemantica = new PilaSemantica();
     private LinkedList<ErrorSemantico> listaErrores = new LinkedList<>();
 
@@ -17,6 +20,7 @@ public class Traductor {
     public static Traductor getInstance() {
         if (instance == null) {
             instance = new Traductor();
+            init_acciones();
         }
         return instance;
     }
@@ -34,6 +38,15 @@ public class Traductor {
     }
     public void addError(ErrorSemantico error){
         listaErrores.add(error);
+    }
+
+
+
+    private static void init_acciones(){
+        accionesSemanticas.put(AccionSemantica.INSERTAR_TS, new InsertarTS());
+        accionesSemanticas.put(AccionSemantica.RECUERDA_ID, new RecuerdaId());
+        accionesSemanticas.put(AccionSemantica.RECUERDA_TIPO, new RecuerdaTipo());
+
     }
 
 }
