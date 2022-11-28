@@ -209,22 +209,12 @@
           </component>
           <component id="afbae" class="javax.swing.JButton" binding="mostrarTablaDeSimbolosButton" default-binding="true">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <background color="-57101"/>
               <font size="24"/>
               <text value="Mostrar tabla de simbolos"/>
-            </properties>
-          </component>
-          <component id="fc8c7" class="javax.swing.JButton" binding="mostrarErroresButton" default-binding="true">
-            <constraints>
-              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <background color="-32665"/>
-              <font size="24"/>
-              <text value="Mostrar Errores"/>
             </properties>
           </component>
           <grid id="9895c" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

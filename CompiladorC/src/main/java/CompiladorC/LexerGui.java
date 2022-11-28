@@ -33,7 +33,6 @@ public class LexerGui extends JFrame  {
     private JPanel JPanelCompilador;
     private JButton buttonSalir;
     private JButton mostrarTablaDeSimbolosButton;
-    private JButton mostrarErroresButton;
     private JPanel JpanelErroresSemanticos;
     private JLabel jlabelErroresSemanticos;
     private JTable tableErroresSemanticos;
@@ -110,6 +109,13 @@ public class LexerGui extends JFrame  {
             }
         });
 
+        mostrarTablaDeSimbolosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GUISemantic semantic = new GUISemantic();
+                semantic.setVisible(true);
+            }
+        });
     }
 
     public String getArchivo(){

@@ -28,5 +28,7 @@ public class Tabla {
         return false;
     }
 
-
+    public ArrayList<TSSymbol> getTabla() {
+        return tabla;
+    }
 }
