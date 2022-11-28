@@ -40,8 +40,7 @@ public class PilaSemantica {
         return null;
     }
 
-
-
-
-
+    public LinkedList<abstactRS> getPila() {
+        return pila;
+    }
 }

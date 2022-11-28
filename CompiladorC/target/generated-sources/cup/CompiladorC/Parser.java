@@ -1022,7 +1022,7 @@ class CUP$Parser$actions {
         System.out.println("Se disparo una accion semantica: " + String.valueOf(accionSemantica));
         try{
             Traductor.accionesSemanticas.get(accionSemantica).ejecutar(s);
-            for(abstacRS rs : Traductor.getInstance().getPilaSemantica()){
+            for(abstacRS rs : Traductor.getInstance().getPilaSemantica().getPila()){
                 System.out.println(rs.getType());
 
             }
