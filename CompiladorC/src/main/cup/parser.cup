@@ -45,6 +45,34 @@ parser code {:
     }
     public static LinkedList<HashSet<String>> typenames = new LinkedList<HashSet<String>>();
 
+    public static void prologoFuncion(String name){
+        traduccion += "\nPROC " + name + "\nMOV sp, bp";0
+    }
+
+    public void espacioParametros(String type){
+        switch (type){
+            case "int":
+                rs_funcion.bytes += 4;
+                break;
+            case "float":
+                rs_funcion.bytes += 4;
+                break;
+            case "char":
+                rs_funcion.bytes += 1;
+                break;
+            case "short":
+                rs_funcion.bytes += 2;
+                break;
+            default:
+                rs_funcion.bytes += 0;
+                break;
+        }
+    }
+
+    public void traducirParametros(){
+        traduccion += "\nSUB sp, " + String.valueOf(rs_funcion.bytes);
+    }
+
     public Parser(LexerCupAnalyzer lex, ComplexSymbolFactory sf) {
 	super(lex,sf);
     }
