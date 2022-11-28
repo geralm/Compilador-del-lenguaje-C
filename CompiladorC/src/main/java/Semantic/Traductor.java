@@ -50,7 +50,7 @@ public class Traductor {
         accionesSemanticas.put(AccionSemantica.RECUERDA_ID, new RecuerdaId());
         accionesSemanticas.put(AccionSemantica.RECUERDA_TIPO, new RecuerdaTipo());
         accionesSemanticas.put(AccionSemantica.START_IF, new StartIF());
-        accionesSemanticas.put(AccionSemantica.START_ElSE, new StartElse());
+        accionesSemanticas.put(AccionSemantica.START_ELSE, new StartElse());
         accionesSemanticas.put(AccionSemantica.TEST_IF, new TestIF());
         accionesSemanticas.put(AccionSemantica.END_IF, new End_IF());
 
@@ -62,6 +62,7 @@ public class Traductor {
          PilaSemantica pilaSemantica = new PilaSemantica();
          listaErrores.clear();
          tablaDeSimbolos = new Tabla();
+         texto_ensamblador ="";
     }
     public int reservarMemoria(String typo){
         switch(typo){
