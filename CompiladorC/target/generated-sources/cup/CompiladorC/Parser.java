@@ -1022,7 +1022,10 @@ class CUP$Parser$actions {
         System.out.println("Se disparo una accion semantica: " + String.valueOf(accionSemantica));
         try{
             Traductor.accionesSemanticas.get(accionSemantica).ejecutar(s);
+            for(abstacRS rs : Traductor.getInstance().getPilaSemantica()){
+                System.out.println(rs.getType());
 
+            }
         }catch(ErrorSemantico e){
             Traductor.getInstance().addError(e);
             System.out.println("Error al ejecutar accion semantica: " + String.valueOf(accionSemantica));
