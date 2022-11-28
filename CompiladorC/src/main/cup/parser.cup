@@ -11,7 +11,7 @@ import Semantic.*;
 import Semantic.AccionesSemanticas.AccionSemantica;
 import Semantic.TablaSimbolos.*;
 import Semantic.AccionesSemanticas.*;
-
+import Semantic.RegistrosSemanticos.*;
 
 
 class Parser;

@@ -16,6 +16,7 @@ import Semantic.*;
 import Semantic.AccionesSemanticas.AccionSemantica;
 import Semantic.TablaSimbolos.*;
 import Semantic.AccionesSemanticas.*;
+import Semantic.RegistrosSemanticos.*;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
