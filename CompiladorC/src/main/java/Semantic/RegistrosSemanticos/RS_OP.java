@@ -5,17 +5,17 @@ import java_cup.runtime.Symbol;
 
 public class RS_OP extends abstactRS {
     public  final rsType type = rsType.OP;
-    private Symbol operador;
+    private String operador;
 
     public RS_OP(rsType type) {
         super(type);
     }
 
-    public Symbol getOperador() {
+    public String getOperador() {
         return operador;
     }
 
-    public void setOperador(Symbol operador) {
+    public void setOperador(String operador) {
         this.operador = operador;
     }
 }

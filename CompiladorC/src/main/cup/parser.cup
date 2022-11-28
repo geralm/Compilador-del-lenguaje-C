@@ -7,11 +7,32 @@ import java_cup.runtime.XMLElement.*;
 import javax.xml.stream.*;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
+import Semantic.*;
+import Semantic.AccionesSemanticas.AccionSemantica;
+import Semantic.TablaSimbolos.*;
+import Semantic.AccionesSemanticas.*;
 
 
 
 class Parser;
+action code {:
 
+
+    public void trigger(AccionSemantica accionSemantica, String s){
+        Traductor.getInstance();
+        System.out.println("Se disparo una accion semantica: " + String.valueOf(accionSemantica));
+        try{
+            Traductor.accionesSemanticas.get(accionSemantica).ejecutar(s);
+
+        }catch(ErrorSemantico e){
+            Traductor.getInstance().addError(e);
+            System.out.println("Error al ejecutar accion semantica: " + String.valueOf(accionSemantica));
+        }
+    }
+    public void testPrint(String s){
+        System.out.println("Test print: " + s);
+    }
+:}
 parser code {:
     public ControlParser controlParser;
     public static int errors = 0;
@@ -140,24 +161,28 @@ start with PROGRAMA;
 
 //DECLARACIONES
 
-Declaracion ::= Declaracion_Specs PuntoComa
-    | Declaracion_Specs Init_Declarador_Lista PuntoComa ;
+Declaracion ::= Declaracion_Specs  PuntoComa{:System.out.println("Ejecutar insertar ts");:}
+    | Declaracion_Specs  Init_Declarador_Lista {:System.out.println("Ejecutar insertar ts");:} PuntoComa {:trigger(AccionSemantica.INSERTAR_TS, "");:};
 
-TipoDato ::= Char:tipo | Int:tipo | Long:tipo | Short:tipo | Void:tipo ;
+TipoDato ::= Char:tipo {:trigger(AccionSemantica.RECUERDA_TIPO, tipo.toString());:}
+            | Int:tipo {:trigger(AccionSemantica.RECUERDA_TIPO, tipo.toString());:}
+            | Long:tipo {:trigger(AccionSemantica.RECUERDA_TIPO,  tipo.toString());:}
+            | Short:tipo {:trigger(AccionSemantica.RECUERDA_TIPO, tipo.toString());:}
+            | Void:tipo ;
 
 Declaracion_Specs ::=
     Const:tipo Declaracion_Specs:ds
     | Static:tipo Declaracion_Specs:ds
-    | TipoDato:ts;
+    | TipoDato:ts ;
 
 Init_Declarador_Lista ::=Init_Declarador:id
 	| Init_Declarador_Lista:idl Coma Init_Declarador:id
 	;
 
 Init_Declarador ::=Declarador:d
-	| Declarador:d Igual Inicializador:i;
+	| Declarador:d Igual Inicializador:i {:System.out.println("Recuerda el inicializador");:}; //
 
-Declarador ::=IDENTIFICADOR:identifier
+Declarador ::=IDENTIFICADOR:identifier {:trigger(AccionSemantica.RECUERDA_ID, identifier.toString()); System.out.println("En declarador");:}
 	| ParentesisIzq Declarador:dd ParentesisDer
 	| Declarador:dd CorcheteIzq ExpConst:ce CorcheteDer
 	| Declarador:dd CorcheteIzq CorcheteDer
@@ -183,8 +208,9 @@ Declarador_Abstracto ::= ParentesisIzq:id Declarador_Abstracto:ad ParentesisDer
 	| Declarador_Abstracto:dad ParentesisIzq:id ParentesisDer
 	| Declarador_Abstracto:dad ParentesisIzq:id Parametros_Lista:ptl ParentesisDer;
 
-Lista_Identificador ::=IDENTIFICADOR:id
-	| Lista_Identificador:li Coma IDENTIFICADOR:id;
+Lista_Identificador ::=IDENTIFICADOR:id {:trigger(AccionSemantica.RECUERDA_ID,  id.toString());:}
+	| Lista_Identificador:li Coma IDENTIFICADOR:id {:trigger(AccionSemantica.RECUERDA_ID,  id.toString());:}
+	;
 
 Inicializador ::=Asignar_Expresion:ae
 	| LlaveIzq Inicializador_lista:il LlaveDer

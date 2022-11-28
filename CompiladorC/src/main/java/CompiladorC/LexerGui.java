@@ -32,8 +32,11 @@ public class LexerGui extends JFrame  {
     private JPanel JPanelPrograma;
     private JPanel JPanelCompilador;
     private JButton buttonSalir;
-    private JButton button1;
-    private JButton button2;
+    private JButton mostrarTablaDeSimbolosButton;
+    private JButton mostrarErroresButton;
+    private JPanel JpanelErroresSemanticos;
+    private JLabel jlabelErroresSemanticos;
+    private JTable tableErroresSemanticos;
 
     private Control control;
 
@@ -69,16 +72,7 @@ public class LexerGui extends JFrame  {
             }
         });
 
-        buttonTokenizar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //método para leer cada uno de los tokens y mostrarlos en la interfaz una vez terminados
-                // aquí proceso la cadena
-                String cadena = textArea.getText().trim();
-                control.tokenizar(cadena); //procesa la cadena y de una vez colocarErroresLexicos en la tabla
-                buttonParsear.setEnabled(true);
-            }
-        });
+
         buttonSalir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -115,13 +109,7 @@ public class LexerGui extends JFrame  {
                 }
             }
         });
-        buttonParsear.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String cadena = textArea.getText().trim();
-                control.parsear(cadena);
-            }
-        });
+
     }
 
     public String getArchivo(){
@@ -135,6 +123,10 @@ public class LexerGui extends JFrame  {
     }
     public JTable getTablaErroresSintacticos() {
         return tableErroresSintacticos;
+    }
+
+    public JTable getTableErroresSemanticos() {
+        return tableErroresSemanticos;
     }
 }
 

@@ -36,7 +36,7 @@ public class PilaSemantica {
                 return pila.get(i);
             }
         }
-        System.out.println("El registro semántico no fue encontrado en la pila ");
+        System.out.println("El registro semántico no fue encontrado en la pila");
         return null;
     }
 

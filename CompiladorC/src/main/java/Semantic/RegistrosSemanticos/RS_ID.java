@@ -5,17 +5,17 @@ import java_cup.runtime.Symbol;
 
  public class RS_ID extends abstactRS{
 
-    private Symbol nombre;
+    private String nombre;
 
      public RS_ID(rsType type) {
          super(type);
      }
 
-     public Symbol getNombre() {
+     public String getNombre() {
          return nombre;
      }
 
-     public void setNombre(Symbol nombre) {
+     public void setNombre(String nombre) {
          this.nombre = nombre;
      }
  }

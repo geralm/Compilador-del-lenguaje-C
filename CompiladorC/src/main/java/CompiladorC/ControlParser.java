@@ -28,7 +28,7 @@ public class ControlParser implements IControl <LexerCupAnalyzer>{
             parser.setControlParser(this);
             Symbol s = parser.parse();
         } catch (Exception e) {
-            System.out.println("Parseado incompleto");
+            System.out.println("Parseado incompleto"+ e);
             imprimirErrores();
         }
 

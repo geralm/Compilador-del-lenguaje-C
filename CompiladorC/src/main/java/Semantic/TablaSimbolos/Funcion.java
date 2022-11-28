@@ -9,7 +9,7 @@ public class Funcion extends TSSymbol {
     private ArrayList<Variable> locales = new ArrayList<>();
     private ArrayList<Variable> parametros = new ArrayList<>();
 
-    public Funcion(Symbol id, Symbol type) {
+    public Funcion(String id, String type) {
         super(id, type);
     }
     public void addLocal(Variable local) throws ErrorSemantico {

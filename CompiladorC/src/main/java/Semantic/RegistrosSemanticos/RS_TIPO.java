@@ -5,18 +5,18 @@ import java_cup.runtime.Symbol;
 
  public class RS_TIPO extends abstactRS {
      public final rsType type = rsType.TIPO;
-    private Symbol tipo;
+    private String tipo;
 
      public RS_TIPO(rsType type) {
          super(type);
 
      }
 
-     public Symbol getTipo() {
+     public String getTipo() {
          return tipo;
      }
 
-     public void setTipo(Symbol tipo) {
+     public void setTipo(String tipo) {
          this.tipo = tipo;
      }
  }

@@ -48,5 +48,10 @@ public class Traductor {
         accionesSemanticas.put(AccionSemantica.RECUERDA_TIPO, new RecuerdaTipo());
 
     }
+    public void reiniciar(){
+         PilaSemantica pilaSemantica = new PilaSemantica();
+         listaErrores.clear();
+         tablaDeSimbolos = new Tabla();
+    }
 
 }

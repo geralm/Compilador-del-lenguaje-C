@@ -3,18 +3,18 @@ package Semantic.TablaSimbolos;
 import java_cup.runtime.Symbol;
 
 public class TSSymbol {
-    protected Symbol id;
-    protected Symbol type;
+    protected String id;
+    protected String type;
 
-    public TSSymbol(Symbol id, Symbol type) {
+    public TSSymbol(String id, String type) {
         this.id = id;
         this.type = type;
     }
 
-    public Symbol getId() {
+    public String getId() {
         return id;
     }
-    public Symbol getType() {
+    public String getType() {
         return type;
     }
 }

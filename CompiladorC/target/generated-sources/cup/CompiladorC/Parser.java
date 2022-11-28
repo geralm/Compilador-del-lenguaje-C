@@ -12,6 +12,10 @@ import java_cup.runtime.XMLElement.*;
 import javax.xml.stream.*;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
+import Semantic.*;
+import Semantic.AccionesSemanticas.AccionSemantica;
+import Semantic.TablaSimbolos.*;
+import Semantic.AccionesSemanticas.*;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -1007,6 +1011,25 @@ public class Parser extends java_cup.runtime.lr_parser {
 /** Cup generated class to encapsulate user supplied action code.*/
 @SuppressWarnings({"rawtypes", "unchecked", "unused"})
 class CUP$Parser$actions {
+
+
+
+
+    public void trigger(AccionSemantica accionSemantica, String s){
+        Traductor.getInstance();
+        System.out.println("Se disparo una accion semantica: " + String.valueOf(accionSemantica));
+        try{
+            Traductor.accionesSemanticas.get(accionSemantica).ejecutar(s);
+
+        }catch(ErrorSemantico e){
+            Traductor.getInstance().addError(e);
+            System.out.println("Error al ejecutar accion semantica: " + String.valueOf(accionSemantica));
+        }
+    }
+    public void testPrint(String s){
+        System.out.println("Test print: " + s);
+    }
+
   private final Parser parser;
 
   /** Constructor */
@@ -1067,7 +1090,7 @@ class CUP$Parser$actions {
 		int tipoleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int tiporight = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object tipo = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-
+		trigger(AccionSemantica.RECUERDA_TIPO, tipo.toString());
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("TipoDato",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1079,7 +1102,7 @@ class CUP$Parser$actions {
 		int tipoleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int tiporight = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object tipo = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-
+		trigger(AccionSemantica.RECUERDA_TIPO, tipo.toString());
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("TipoDato",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1091,7 +1114,7 @@ class CUP$Parser$actions {
 		int tipoleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int tiporight = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object tipo = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-
+		trigger(AccionSemantica.RECUERDA_TIPO,  tipo.toString());
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("TipoDato",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1103,7 +1126,7 @@ class CUP$Parser$actions {
 		int tipoleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int tiporight = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object tipo = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-
+		trigger(AccionSemantica.RECUERDA_TIPO, tipo.toString());
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("TipoDato",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1211,11 +1234,10 @@ class CUP$Parser$actions {
 		int ileft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object i = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-
+		System.out.println("Recuerda el inicializador");
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Init_Declarador",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
-
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 15: // Declarador ::= IDENTIFICADOR 
             {
@@ -1223,7 +1245,7 @@ class CUP$Parser$actions {
 		int identifierleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int identifierright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object identifier = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-
+		trigger(AccionSemantica.RECUERDA_ID, identifier.toString());
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Declarador",7, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1520,7 +1542,7 @@ class CUP$Parser$actions {
 		int idleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-
+		trigger(AccionSemantica.RECUERDA_ID,  id.toString());
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Lista_Identificador",42, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1535,7 +1557,7 @@ class CUP$Parser$actions {
 		int idleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-
+		trigger(AccionSemantica.RECUERDA_ID,  id.toString());
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Lista_Identificador",42, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -2300,7 +2322,7 @@ class CUP$Parser$actions {
           case 93: // NT$0 ::= 
             {
               Object RESULT =null;
-MSG_ERROR = "Se esperaba una }";
+MSG_ERROR = "Token inesperado";
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("NT$0",45, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -2356,7 +2378,7 @@ MSG_ERROR = "Se esperaba una }";
           case 99: // NT$1 ::= 
             {
               Object RESULT =null;
-MSG_ERROR = "Se esperaba una }";
+MSG_ERROR = "Token insperado";
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("NT$1",46, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -2376,7 +2398,7 @@ MSG_ERROR = "Se esperaba una }";
           case 101: // NT$2 ::= 
             {
               Object RESULT =null;
-MSG_ERROR = "Se esperaba una }";
+MSG_ERROR = "Token inesperado }";
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("NT$2",47, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -2688,7 +2710,7 @@ MSG_ERROR = "Se esperaba una }";
           case 124: // NT$8 ::= 
             {
               Object RESULT =null;
-MSG_ERROR = "Se esperaba un ;";
+MSG_ERROR = "Se esperaba otro token";
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("NT$8",53, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;

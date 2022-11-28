@@ -13,15 +13,16 @@ public class RecuerdaVariable implements IAccionSemantica{
 
 
     @Override
-    public void ejecutar(Symbol token) throws ErrorSemantico {
+    public void ejecutar(String token) throws ErrorSemantico {
         RS_DO rs_do = (RS_DO) RS_Factory.create(rsType.DO);
-        rs_do.setDireccionMemoria("Prueba direccion de memoria, cambiar esto en la clase Semantic\\AccionesSemanticas\\RecuerdaVariable.java");
-        rs_do.setNombre(token);
+        System.out.println("Token ->"+token);
+        //rs_do.setResultado(token);
+        rs_do.setTipoVariable(token);
         if(!Traductor.getInstance().getTablaDeSimbolos().existe(token)){
             //en caso de que no exista
             Traductor.getInstance().getTablaDeSimbolos().insertar(new TSSymbol(token, token));
             System.out.println("Se inserta los dos tokens hay que solucionar eso en la clase Semantic\\AccionesSemanticas\\RecuerdaVariable.java");
-            throw new ErrorSemantico("La variable " + token.value + " no ha sido declarada");
+            throw new ErrorSemantico("La variable " + token+ " no ha sido declarada");
         }
         Traductor.getInstance().getPilaSemantica().push(rs_do);
     }

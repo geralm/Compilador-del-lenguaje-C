@@ -10,6 +10,7 @@ public class Control {
     public LexerGui screen;
     private ControlLexer controlLexer;
     private ControlParser controlParser;
+    private ControlSemantic controlSemantic;
     //private ControlParser controlParser;
     //private ControlSemantic controlSemantic;
 
@@ -17,7 +18,7 @@ public class Control {
         this.screen =screen;
         controlLexer = new ControlLexer();
         controlParser = new ControlParser();
-
+        controlSemantic = new ControlSemantic();
     }
 
     public void limpiar() {
@@ -35,7 +36,7 @@ public class Control {
         screen.limpiarTabla(screen.getTableErroresSintacticos());
         tokenizar(datos);
         parsear(datos);
-
+        traducir();
         //controlSemantic.procesar(datos);
         //colocarErroresSemanticos();
     }
@@ -63,6 +64,11 @@ public class Control {
         controlParser.procesar(lexerCupAnalyzer);
         DefaultTableModel modeloSintatico = controlParser.construirModelo(screen.getTableErroresSintacticos());
         screen.getTablaErroresSintacticos().setModel(modeloSintatico);
+    }
+    public void traducir(){
+        controlSemantic.limpiar();
+        DefaultTableModel modeloSemantico = controlParser.construirModelo(screen.getTableErroresSemanticos());
+        screen.getTableErroresSemanticos().setModel(modeloSemantico);
     }
     /*-----------------------------------------------------------------------------------------------------------------
      *                               SEMANTIC - ANALIZADOR SEMANTICO

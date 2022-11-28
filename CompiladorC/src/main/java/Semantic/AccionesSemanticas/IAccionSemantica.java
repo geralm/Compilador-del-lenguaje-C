@@ -4,5 +4,5 @@ import Semantic.TablaSimbolos.ErrorSemantico;
 import java_cup.runtime.Symbol;
 
 public interface IAccionSemantica {
-    public void ejecutar(Symbol token) throws ErrorSemantico;
+    public void ejecutar(String token) throws ErrorSemantico;
 }

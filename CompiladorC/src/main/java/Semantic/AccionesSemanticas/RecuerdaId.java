@@ -10,7 +10,8 @@ public class RecuerdaId implements IAccionSemantica {
     public RecuerdaId() {}
 
     @Override
-    public void ejecutar(Symbol token) {
+    public void ejecutar(String token) {
+        System.out.println("Token->"+token);
         RS_TIPO rs_tipo = (RS_TIPO ) RS_Factory.create(rsType.TIPO);
         rs_tipo.setTipo(token);
         Traductor.getInstance().getPilaSemantica().push(rs_tipo);

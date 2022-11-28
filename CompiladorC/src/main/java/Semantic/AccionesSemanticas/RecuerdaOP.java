@@ -10,7 +10,7 @@ public class RecuerdaOP implements IAccionSemantica{
 
 
     @Override
-    public void ejecutar(Symbol token) {
+    public void ejecutar(String token) {
         RS_OP rs_op = (RS_OP) RS_Factory.create(rsType.OP);
         rs_op.setOperador(token);
         Traductor.getInstance().getPilaSemantica().push(rs_op);
