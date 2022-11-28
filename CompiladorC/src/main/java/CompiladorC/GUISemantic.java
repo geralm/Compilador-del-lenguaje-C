@@ -17,6 +17,7 @@ public class GUISemantic extends JFrame {
 
     public GUISemantic( ) {
         setContentPane(mainpanel);
+        setBounds(0,0,mainpanel.getWidth(),mainpanel.getHeight());
         llenarTabla();
 
         Volver.addActionListener(new ActionListener() {
