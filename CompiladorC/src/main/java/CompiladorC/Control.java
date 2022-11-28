@@ -46,6 +46,7 @@ public class Control {
     * ----------------------------------------------------------------------------------------------------------------*/
 
     public void tokenizar(String datos){
+        screen.limpiarTabla(screen.getTableErroresSemanticos());
         controlLexer.limpiar();//esto me evita que los errores se me acumulen en el arraylist
         screen.limpiarTabla(screen.getTablaErroresLexicos());
         controlLexer.procesar(datos);
@@ -58,6 +59,7 @@ public class Control {
 
 
     public void parsear(String cadena){
+        controlSemantic.limpiar();
         controlParser.limpiar();
         screen.limpiarTabla(screen.getTableErroresSintacticos());
         LexerCupAnalyzer lexerCupAnalyzer = new LexerCupAnalyzer(new StringReader(cadena));
@@ -66,9 +68,10 @@ public class Control {
         screen.getTablaErroresSintacticos().setModel(modeloSintatico);
     }
     public void traducir(){
-        controlSemantic.limpiar();
-        DefaultTableModel modeloSemantico = controlParser.construirModelo(screen.getTableErroresSemanticos());
+
+        DefaultTableModel modeloSemantico = controlSemantic.construirModelo(screen.getTableErroresSemanticos());
         screen.getTableErroresSemanticos().setModel(modeloSemantico);
+
     }
     /*-----------------------------------------------------------------------------------------------------------------
      *                               SEMANTIC - ANALIZADOR SEMANTICO

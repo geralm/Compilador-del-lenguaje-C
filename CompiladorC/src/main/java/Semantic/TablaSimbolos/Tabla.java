@@ -27,6 +27,15 @@ public class Tabla {
         }
         return false;
     }
+    public TSSymbol obtener(String id){
+        for(TSSymbol simbolo:  tabla){
+            if(simbolo.getId().equals(id)){
+                return simbolo;
+            }
+
+        }
+        return null;
+    }
 
     public ArrayList<TSSymbol> getTabla() {
         return tabla;

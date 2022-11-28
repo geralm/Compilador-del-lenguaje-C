@@ -43,4 +43,10 @@ public class PilaSemantica {
     public LinkedList<abstactRS> getPila() {
         return pila;
     }
+    public void mostrarPila(){;
+        for(int i = tope; i>=0 ; i--){
+            abstactRS rs = pila.get(i);
+            System.out.println(rs.getType());
+        }
+    }
 }

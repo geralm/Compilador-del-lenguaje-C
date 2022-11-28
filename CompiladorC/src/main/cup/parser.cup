@@ -23,10 +23,9 @@ action code {:
         System.out.println("Se disparo una accion semantica: " + String.valueOf(accionSemantica));
         try{
             Traductor.accionesSemanticas.get(accionSemantica).ejecutar(s);
-            for(abstactRS rs : Traductor.getInstance().getPilaSemantica().getPila()){
-                System.out.println(rs.getType());
-
-            }
+            System.out.println("--------------------------------Pila semantica----------------------------");
+            Traductor.getInstance().getPilaSemantica().mostrarPila();
+            System.out.println("--------------------------------fin de la pila semantica----------------------------");
         }catch(ErrorSemantico e){
             Traductor.getInstance().addError(e);
             System.out.println("Error al ejecutar accion semantica: " + String.valueOf(accionSemantica));
@@ -337,8 +336,8 @@ Statement_Label ::= IDENTIFICADOR:id DosPuntos Statement:s
 // ---------Problema del if else
 SeleccionStatement ::= seleccionStatementIF
     | Switch ParentesisIzq Exp:e ParentesisDer Statement:s;
-seleccionStatementIF ::=If ParentesisIzq Exp:e ParentesisDer Statement:s1 seleccionStatementIFElse; //SeleccionStatementElse
-seleccionStatementIFElse ::= Else Statement:s2;
+seleccionStatementIF ::=If {:trigger(AccionSemantica.START_IF, "IF 339");:} ParentesisIzq Exp:e{:System.out.println("ejecutar Evalbinary y text if");:} ParentesisDer Statement:s1 seleccionStatementIFElse; //SeleccionStatementElse
+seleccionStatementIFElse ::= Else {:trigger(AccionSemantica.START_ELSE, "Else 340");:} Statement:s2 {:trigger(AccionSemantica.END_IF, "End IF 339");:};
 
 
 

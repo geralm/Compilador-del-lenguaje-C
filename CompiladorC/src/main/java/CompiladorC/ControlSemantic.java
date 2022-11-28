@@ -25,10 +25,11 @@ public class ControlSemantic implements IControl{
     @Override
     public DefaultTableModel construirModelo(JTable tabla) {
         DefaultTableModel modelErrores = (DefaultTableModel) tabla.getModel(); //crea un nuevo modelo
+        modelErrores.setColumnIdentifiers(new Object[]{"Mensaje","Tipo","Simbolo"});
         System.out.println("Lista de errores semanticos");
         for(ErrorSemantico error : traductor.getListaErrores()){
             System.out.println(error.getMessage());
-            modelErrores.addRow(new Object[]{error.getMessage(), error.getSymbol().toString()}); //agrega el token a la tabla
+            modelErrores.addRow(new Object[]{error.getMessage(), error.getSymbol().getType(), error.getSymbol().getId() }); //agrega el token a la tabla
         }
         return modelErrores;
     }
