@@ -4,6 +4,7 @@ import Enums.rsType;
 import Semantic.RegistrosSemanticos.RS_WHILE;
 import Semantic.RegistrosSemanticos.abstactRS;
 import Semantic.TablaSimbolos.ErrorSemantico;
+import Semantic.TablaSimbolos.TSSymbol;
 import Semantic.Traductor;
 
 import java.util.LinkedList;
@@ -20,7 +21,7 @@ public class VerifyContinue implements  IAccionSemantica{
         }
 
         if(pilaAuxiliar.isEmpty()){
-            throw new ErrorSemantico("No se puede usar break fuera de un ciclo");
+            throw new ErrorSemantico("No se puede usar continue fuera de un ciclo", new TSSymbol("continue", ""));
         } else {
             RS_WHILE rs_while = (RS_WHILE) rs;
             String traduccion = "\nJMP " + RS_WHILE.whileLabel + String.valueOf(RS_WHILE.cantidadLabels);

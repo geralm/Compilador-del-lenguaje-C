@@ -379,8 +379,8 @@ Statement ::=
 	| WriteStatement:ws
 	;
 
-JumpStatement ::= Continue PuntoComa
-    | Break PuntoComa
+JumpStatement ::= Continue{:trigger(AccionSemantica.VERIFY_CONTINUE, "VERIFY CONTINUE 382");:} PuntoComa
+    | Break {:trigger(AccionSemantica.VERIFY_BREAK, "VERIFY BREAK 383");:} PuntoComa
     | Return PuntoComa
     | Return Exp:e PuntoComa;
 
