@@ -5,35 +5,28 @@ import Enums.rsType;
 import java_cup.runtime.Symbol;
 
 public class RS_DO extends abstactRS {
-    private ETypoRs_Do tipo_RS_DO;
-    private int direction;
-    private String tipo_variable; // Tipo de dato que se va a guardar en la dirección
+    private ETypoRs_Do tipo= ETypoRs_Do.CONSTANTE;//por defecto es constante
+
+    private String valor; // Tipo de dato que se va a guardar en la dirección
 
     public RS_DO(rsType type ) {
         super(type);
     }
 
-    public void setDireccion(int resultado) {
-        this.direction = resultado;
-    }
-    public void setTipoVariable(String tipo) {
-        this.tipo_variable = tipo;
+    public ETypoRs_Do getTipo() {
+        return tipo;
     }
 
-    public ETypoRs_Do getTipo_RS_DO() {
-        return tipo_RS_DO;
+    public void setTipo(ETypoRs_Do tipo) {
+        this.tipo = tipo;
     }
 
-    public void setTipo_RS_DO(ETypoRs_Do tipo_RS_DO) {
-        this.tipo_RS_DO = tipo_RS_DO;
+    public String getValor() {
+        return valor;
     }
 
-    public int getDirection() {
-        return direction;
-    }
-
-    public String getTipo_variable() {
-        return tipo_variable;
+    public void setValor(String valor) {
+        this.valor = valor;
     }
 
     public enum ETypoRs_Do {

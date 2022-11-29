@@ -36,13 +36,14 @@ public class LexerGui extends JFrame  {
     private JPanel JpanelErroresSemanticos;
     private JLabel jlabelErroresSemanticos;
     private JTable tableErroresSemanticos;
+    private JButton Ejemplo;
 
     private Control control;
 
     public JTable getTableErroresSintacticos() {
         return tableErroresSintacticos;
     }
-
+    String path = "";
     public LexerGui() {
         setContentPane(mainPanel);
         setTitle("Compilador C");
@@ -98,7 +99,7 @@ public class LexerGui extends JFrame  {
                                 valor = fr.read();
                             }
                             textArea.setText(cadena);
-
+                            path = ruta;
                         }catch(IOException ex){
                             System.out.println("Error al leer el archivo");
 
@@ -112,8 +113,21 @@ public class LexerGui extends JFrame  {
         mostrarTablaDeSimbolosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GUISemantic semantic = new GUISemantic();
+                GUISemantic semantic = new GUISemantic(path);
                 semantic.setVisible(true);
+            }
+        });
+        Ejemplo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.setText("int main(){\n" +
+                        "\tif(a==0){\n" +
+                        "\t\tint b = 0;\n"+
+                        "\t}else{\n" +
+                        "\t\tint c, v ,d;\n"+
+                        "\t}\n" +
+                        "\n" +
+                        "}\n");
             }
         });
     }

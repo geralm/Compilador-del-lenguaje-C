@@ -14,7 +14,7 @@ public class Tabla {
         for (TSSymbol simbolo : tabla) {
             System.out.println("Comparo " + simbolo.getId()+ " con " + id.getId());
             if (simbolo.getId().equals(id.getId())) {
-                throw new ErrorSemantico("Variable ya esta declarada", simbolo);
+                throw new ErrorSemantico("El identificador ya esta declarado", simbolo);
             }
         }
         return false;
@@ -33,6 +33,14 @@ public class Tabla {
                 return simbolo;
             }
 
+        }
+        return null;
+    }
+    public Funcion buscarUltimaFuncion(){
+        for(int i = tabla.size()-1; i >= 0; i--){
+            if(tabla.get(i) instanceof Funcion){
+                return (Funcion) tabla.get(i);
+            }
         }
         return null;
     }

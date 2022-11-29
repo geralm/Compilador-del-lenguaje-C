@@ -6,7 +6,8 @@ import Semantic.Traductor;
 
 public class StartElse implements IAccionSemantica{
 
-
+    public StartElse() {
+    }
     @Override
     public void ejecutar(String token) throws ErrorSemantico {
         System.out.println("Aún no están implementadas las funciones del traductor");

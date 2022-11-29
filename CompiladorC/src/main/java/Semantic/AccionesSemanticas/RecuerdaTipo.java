@@ -9,7 +9,8 @@ import java_cup.runtime.Symbol;
 
 public class RecuerdaTipo implements IAccionSemantica{
 
-
+    public RecuerdaTipo() {
+    }
     @Override
     public void ejecutar(String token) {
         System.out.println("Token "+token);
