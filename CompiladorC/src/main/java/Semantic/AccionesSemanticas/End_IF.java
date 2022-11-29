@@ -6,6 +6,8 @@ import Semantic.TablaSimbolos.ErrorSemantico;
 import Semantic.Traductor;
 
 public class End_IF implements IAccionSemantica{
+    public End_IF() {
+    }
     @Override
     public void ejecutar(String token) throws ErrorSemantico {
         String exit = RS_IF.endIfLabel+String.valueOf(RS_IF.cantidadLabels)+":";

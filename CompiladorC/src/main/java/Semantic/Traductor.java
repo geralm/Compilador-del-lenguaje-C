@@ -59,6 +59,9 @@ public class Traductor {
         accionesSemanticas.put(AccionSemantica.RECUERDA_CONSTANTE, new RecuerdaConstante());
         accionesSemanticas.put(AccionSemantica.RECUERDA_VARIABLE, new RecuerdaVariable());
         accionesSemanticas.put(AccionSemantica.RECUERDA_OP, new RecuerdaOP());
+        accionesSemanticas.put(AccionSemantica.START_WHILE, new StartWhile());
+        accionesSemanticas.put(AccionSemantica.TEST_WHILE, new testWhile());
+        accionesSemanticas.put(AccionSemantica.END_WHILE, new endWhile());
 
 
     }
@@ -92,6 +95,19 @@ public class Traductor {
                 return 0;
         }
     }
+    public String bytesToAsm(int b){
+        switch(b){
+            case 1:
+                return "resb";
+            case 2:
+                return "resb";
+            case 4:
+                return "dword";
+            default:
+                return "";
+        }
+
+    }
     public String traducir(){
         String data = ".DATA\n";
         String udata = ".UDATA\n";
@@ -99,7 +115,7 @@ public class Traductor {
         String undefinedVar = "";
         for(TSSymbol symbol: tablaDeSimbolos.getTabla()){
             if(symbol instanceof Variable){
-                undefinedVar=undefinedVar+"\t"+symbol.getId()+" "+memoriaReservada(symbol.getType())+" 1\n";
+                undefinedVar=undefinedVar+"\t"+symbol.getId()+" "+bytesToAsm(memoriaReservada(symbol.getType()))+" 1\n";
             }
         }
         String finalStr = data+udata+undefinedVar+code;

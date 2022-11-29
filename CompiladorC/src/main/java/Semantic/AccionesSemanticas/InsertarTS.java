@@ -7,6 +7,8 @@ import Semantic.TablaSimbolos.*;
 import Semantic.Traductor;
 
 public class InsertarTS implements IAccionSemantica {
+    public InsertarTS() {
+    }
     @Override
     public void ejecutar(String token) throws ErrorSemantico {
         RS_TIPO rsTipo = (RS_TIPO) Traductor.getInstance().getPilaSemantica().buscar(rsType.TIPO);

@@ -113,7 +113,7 @@ public class LexerGui extends JFrame  {
         mostrarTablaDeSimbolosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GUISemantic semantic = new GUISemantic();
+                GUISemantic semantic = new GUISemantic(path);
                 semantic.setVisible(true);
             }
         });

@@ -6,7 +6,8 @@ import Semantic.TablaSimbolos.ErrorSemantico;
 import Semantic.Traductor;
 
 public class TestIF implements IAccionSemantica{
-
+    public TestIF() {
+    }
     @Override
     public void ejecutar(String token) throws ErrorSemantico {
         RS_DO rs_do_resultado = (RS_DO) Traductor.getInstance().getPilaSemantica().pop();

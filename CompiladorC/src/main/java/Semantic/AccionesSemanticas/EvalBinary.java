@@ -9,7 +9,8 @@ import java_cup.runtime.Symbol;
 
 public class EvalBinary implements IAccionSemantica{
 
-
+    public EvalBinary() {
+    }
     @Override
     public void ejecutar(String token) {
          RS_DO rs_do2 = (RS_DO) Traductor.getInstance().getPilaSemantica().pop();

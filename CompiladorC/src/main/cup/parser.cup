@@ -201,11 +201,11 @@ Init_Declarador_Lista ::=Init_Declarador:id
 Init_Declarador ::=Declarador:d
 	| Declarador:d Igual Inicializador:i {:System.out.println("Recuerda el inicializador");:}; //
 
-Declarador ::=IDENTIFICADOR:identifier {:trigger(AccionSemantica.RECUERDA_ID, identifier.toString()); trigger(AccionSemantica.INSERTAR_TS,"$Funcion");:}
+Declarador ::=IDENTIFICADOR:identifier {:trigger(AccionSemantica.RECUERDA_ID, identifier.toString());:}
 	| ParentesisIzq Declarador:dd ParentesisDer
 	| Declarador:dd CorcheteIzq ExpConst:ce CorcheteDer
 	| Declarador:dd CorcheteIzq CorcheteDer
-	| Declarador:dd ParentesisIzq Parametros_Lista:pl {:trigger(AccionSemantica.INSERTAR_TS, "$Parametro");:}  ParentesisDer
+	| Declarador:dd ParentesisIzq Parametros_Lista:pl  ParentesisDer {:trigger(AccionSemantica.INSERTAR_TS, "$Parametro");:}
 	| Declarador:dd ParentesisIzq Lista_Identificador:li ParentesisDer
 	| Declarador:dd ParentesisIzq ParentesisDer;
 
@@ -326,10 +326,10 @@ DECLARACIONES ::= Declaracion
 Declaracion_Lista ::= Declaracion:d
     | Declaracion_Lista:dl Declaracion;
 
-DeclaracionFuncion ::= Declaracion_Specs:ds Declarador:d Declaracion_Lista:dl {: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
-    | Declaracion_Specs:ds Declarador:d {: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
-    | Declarador:d Declaracion_Lista:dl {: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
-    | Declarador:d {: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
+DeclaracionFuncion ::= Declaracion_Specs:ds Declarador:d {: trigger(AccionSemantica.INSERTAR_TS,"$Funcion");:} Declaracion_Lista:dl {: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
+    | Declaracion_Specs:ds Declarador:d {: Parser.newScope();trigger(AccionSemantica.INSERTAR_TS,"$Funcion"); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
+    | Declarador:d {: trigger(AccionSemantica.INSERTAR_TS,"$Funcion");:} Declaracion_Lista:dl {: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
+    | Declarador:d {: Parser.newScope(); trigger(AccionSemantica.INSERTAR_TS,"$Funcion");:} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
     | DeclaracionCompuesta:d
 
     ;
@@ -362,7 +362,7 @@ seleccionStatementIFElse ::= Else {:trigger(AccionSemantica.START_ELSE, "Else 34
 
 // ::= Else Statement:s2 | DECLARACIONES ;// TENER CUIDADO
 
-IteracionStatement ::= While ParentesisIzq Exp:e ParentesisDer Statement:s
+IteracionStatement ::= While {:trigger(AccionSemantica.START_WHILE, "start while 365");:} ParentesisIzq Exp:e {:trigger(AccionSemantica.TEST_WHILE, "TEST while 365");:} ParentesisDer Statement:s {:trigger(AccionSemantica.END_WHILE, "End while 365");:}
     | Do Statement:s While ParentesisIzq Exp:e ParentesisDer PuntoComa
     | For ParentesisIzq ExpStatement:es1 ExpStatement:es2 ParentesisDer Statement:s
     | For ParentesisIzq ExpStatement:es1 ExpStatement:es2 Exp:e ParentesisDer Statement:s;

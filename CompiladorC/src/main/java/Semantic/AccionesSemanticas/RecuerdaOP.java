@@ -8,7 +8,8 @@ import java_cup.runtime.Symbol;
 
 public class RecuerdaOP implements IAccionSemantica{
 
-
+    public RecuerdaOP() {
+    }
     @Override
     public void ejecutar(String token) {
         RS_OP rs_op = (RS_OP) RS_Factory.create(rsType.OP);

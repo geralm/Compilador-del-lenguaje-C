@@ -7,6 +7,8 @@ import Semantic.TablaSimbolos.TSSymbol;
 import Semantic.Traductor;
 
 public class RecuerdaConstante implements IAccionSemantica {
+    public RecuerdaConstante() {
+    }
     @Override
     public void ejecutar(String token) {
         RS_DO rs = (RS_DO)RS_Factory.create(rsType.DO);

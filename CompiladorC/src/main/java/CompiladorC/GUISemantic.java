@@ -22,7 +22,7 @@ public class GUISemantic extends JFrame {
     String path = "";
     public GUISemantic(String ruta) {
         setContentPane(mainpanel);
-
+        path= ruta;
         setExtendedState(JFrame.NORMAL);
         llenarTabla();
         textArea.setText(Traductor.getInstance().traducir());

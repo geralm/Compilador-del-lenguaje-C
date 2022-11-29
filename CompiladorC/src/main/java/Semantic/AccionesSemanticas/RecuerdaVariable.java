@@ -12,7 +12,8 @@ import java_cup.runtime.Symbol;
 
 public class RecuerdaVariable implements IAccionSemantica{
 
-
+    public RecuerdaVariable() {
+    }
     @Override
     public void ejecutar(String token) throws ErrorSemantico {
         RS_DO rs_do = (RS_DO) RS_Factory.create(rsType.DO);
