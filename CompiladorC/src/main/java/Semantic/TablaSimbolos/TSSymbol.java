@@ -3,7 +3,7 @@ package Semantic.TablaSimbolos;
 import java_cup.runtime.Symbol;
 
 public class TSSymbol {
-    protected TipoTS tipoTS_symbol;
+    protected TipoTS tipoTS_symbol = TipoTS.ERROR;
     protected String id;
     protected String type;
 
@@ -38,6 +38,6 @@ public class TSSymbol {
         }
     }
     public static enum TipoTS{
-        VARIABLE, FUNCION, PARAMETRO
+        VARIABLE, FUNCION, PARAMETRO, ERROR
     }
 }

@@ -43,7 +43,7 @@ public class LexerGui extends JFrame  {
     public JTable getTableErroresSintacticos() {
         return tableErroresSintacticos;
     }
-
+    String path = "";
     public LexerGui() {
         setContentPane(mainPanel);
         setTitle("Compilador C");
@@ -99,7 +99,7 @@ public class LexerGui extends JFrame  {
                                 valor = fr.read();
                             }
                             textArea.setText(cadena);
-
+                            path = ruta;
                         }catch(IOException ex){
                             System.out.println("Error al leer el archivo");
 

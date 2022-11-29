@@ -25,14 +25,14 @@ action code {:
             if(s.contains("$")){
                 InsertarTS insertarTS = (InsertarTS) Traductor.accionesSemanticas.get(accionSemantica);
                 if(s.contains("Variable")){
-
+                    System.out.println("Se inserta una variable");
 
                     insertarTS.ejecutar("Variable");
                 }else if(s.contains("Funcion")){
-
+                    System.out.println("Se inserta una funcion");
                     insertarTS.ejecutar("Funcion");
                 }else if(s.contains("Parametro")){
-
+                    System.out.println("Se inserta un parametro");
                     insertarTS.ejecutar("Parametro");
                 }
             }else{
@@ -240,7 +240,7 @@ Inicializador ::=Asignar_Expresion:ae
 
 Inicializador_lista ::=Inicializador:i
 	| Inicializador_lista:il Coma Inicializador:i;
-
+//EXPRESIONES EXPRESIONES EXPRESIONES EXPRESIONES
 Asignar_Expresion ::= ExpCondicional:ec
       | ExpUnaria:ue  Operador_Asignacion:aop Asignar_Expresion:ae
       ;
@@ -270,14 +270,14 @@ ExpAnd ::= ExpIgualdad:ei
     | ExpAnd:ea And:op {:System.out.println("Recuerda &");trigger(AccionSemantica.RECUERDA_OP, op.toString());:} ExpIgualdad:ei;
 
 ExpIgualdad ::= ExpRelacional:er
-    | ExpIgualdad:ei DobleIgual ExpRelacional:er
-    | ExpIgualdad:ei Diferente ExpRelacional:er;
+    | ExpIgualdad:ei DobleIgual:igig {:System.out.println("Recuerda ==");trigger(AccionSemantica.RECUERDA_OP, igig.toString());:} ExpRelacional:er
+    | ExpIgualdad:ei Diferente:dif {:System.out.println("Recuerda !=");trigger(AccionSemantica.RECUERDA_OP, dif.toString());:} ExpRelacional:er;
 
 ExpRelacional ::= ExpAditiva:ea
-		      | ExpRelacional:re Menor:op ExpAditiva:ea
-		      | ExpRelacional:re Mayor:op ExpAditiva:ea
-		      | ExpRelacional:re MenorIgual:op ExpAditiva:ea
-		      | ExpRelacional:re MayorIgual:op ExpAditiva:ea;
+		      | ExpRelacional:re Menor:op {:System.out.println("Recuerda <");trigger(AccionSemantica.RECUERDA_OP, op.toString());:} ExpAditiva:ea
+		      | ExpRelacional:re Mayor:op {:System.out.println("Recuerda >");trigger(AccionSemantica.RECUERDA_OP, op.toString());:} ExpAditiva:ea
+		      | ExpRelacional:re MenorIgual:op {:System.out.println("Recuerda <=");trigger(AccionSemantica.RECUERDA_OP, op.toString());:} ExpAditiva:ea
+		      | ExpRelacional:re MayorIgual:op {:System.out.println("Recuerda >=");trigger(AccionSemantica.RECUERDA_OP, op.toString());:} ExpAditiva:ea;
 
 ExpAditiva ::= ExpMultiplicativa:em
     | ExpAditiva:ea Mas:op {:trigger(AccionSemantica.RECUERDA_OP, op.toString());:} ExpMultiplicativa:em

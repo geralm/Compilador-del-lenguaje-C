@@ -8,6 +8,10 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class GUISemantic extends JFrame {
     private JButton Volver;
@@ -15,9 +19,10 @@ public class GUISemantic extends JFrame {
     private JTextArea textArea;
     private JTable table;
     private JPanel mainpanel;
-
-    public GUISemantic( ) {
+    String path = "";
+    public GUISemantic(String ruta) {
         setContentPane(mainpanel);
+
         setExtendedState(JFrame.NORMAL);
         llenarTabla();
         textArea.setText(Traductor.getInstance().traducir());
@@ -25,6 +30,33 @@ public class GUISemantic extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+            }
+        });
+        Generar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(path.contains(".c")){
+                    path = path.replace(".c",".txt");
+                }
+                else{
+                    path = path.replace(".txt","1.txt");
+                }
+                String finalPath= path;
+                System.out.println("Text to save: "+textArea.getText());
+                System.out.println("Final path to save "+finalPath);
+                try {
+                    File file = new File(finalPath);
+                    FileWriter fw = new FileWriter(file);
+                    BufferedWriter bw = new BufferedWriter(fw);
+
+                    fw = new FileWriter(file);
+                    bw.write(textArea.getText());
+                    bw.close();
+                    fw.close();
+                    JOptionPane.showMessageDialog(null, "Archivo guardado exitosamente "+finalPath);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Error al guardar el archivo");
+                }
             }
         });
     }

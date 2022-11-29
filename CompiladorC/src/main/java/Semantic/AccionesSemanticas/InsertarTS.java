@@ -31,6 +31,7 @@ public class InsertarTS implements IAccionSemantica {
                     variable.setTipoTS_symbol(tst);
                     Tabla t = Traductor.getInstance().getTablaDeSimbolos();
                     Funcion f = t.buscarUltimaFuncion();
+
                     f.addParametro(variable);
                 }
 
@@ -38,7 +39,7 @@ public class InsertarTS implements IAccionSemantica {
 
             }
         }else{
-            Traductor.getInstance().addError(new ErrorSemantico("No se ha encontrado el tipo de la variable"));
+            Traductor.getInstance().addError(new ErrorSemantico("No se ha encontrado el tipo de la variable", new Variable(token, "Error!")));
         }
         Traductor.getInstance().getTablaDeSimbolos().getTabla().forEach((k)-> System.out.println(k.getId()+"->"+k.getType()+"="+k.getTipoTS_symbol().toString()));
         Traductor.getInstance().getPilaSemantica().pop();

@@ -11,9 +11,6 @@ public class ErrorSemantico extends Exception {
         this.message = message;
         this.symbol = symbol;
     }
-    public ErrorSemantico(String message) {
-        super(message);
-    }
     public TSSymbol getSymbol() {
         return symbol;
     }

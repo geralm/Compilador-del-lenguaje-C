@@ -24,7 +24,7 @@ public class RecuerdaVariable implements IAccionSemantica{
             //en caso de que no exista
             Traductor.getInstance().getTablaDeSimbolos().insertar(new TSSymbol(token, "Error! varible no declarada"));
             System.out.println("Se inserta los dos tokens hay que solucionar eso en la clase Semantic\\AccionesSemanticas\\RecuerdaVariable.java");
-            throw new ErrorSemantico("La variable " + token+ " no ha sido declarada");
+            throw new ErrorSemantico("La variable " + token+ " no ha sido declarada", new Variable(token, "Error!"));
         }else {
             Variable simbolo = (Variable) Traductor.getInstance().getTablaDeSimbolos().obtener(token);
             simbolo.setMemoria(Traductor.direccionMemoria(token));
