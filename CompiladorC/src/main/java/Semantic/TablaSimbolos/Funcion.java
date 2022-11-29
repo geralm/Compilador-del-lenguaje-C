@@ -35,5 +35,9 @@ public class Funcion extends TSSymbol {
         }
         return true;
     }
+
+    public ArrayList<Variable> getParametros() {
+        return parametros;
+    }
 }
 

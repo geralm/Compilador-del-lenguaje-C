@@ -12,4 +12,6 @@ public class RS_IF extends abstactRS {
     public RS_IF(rsType type) {
         super(type);
     }
+
+
 }

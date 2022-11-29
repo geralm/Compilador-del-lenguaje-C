@@ -5,7 +5,7 @@ import java_cup.runtime.Symbol;
 
  public class RS_ID extends abstactRS{
 
-    private String nombre;
+    private String nombre = "";
 
      public RS_ID(rsType type) {
          super(type);

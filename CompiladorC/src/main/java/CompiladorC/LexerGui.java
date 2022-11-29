@@ -36,6 +36,7 @@ public class LexerGui extends JFrame  {
     private JPanel JpanelErroresSemanticos;
     private JLabel jlabelErroresSemanticos;
     private JTable tableErroresSemanticos;
+    private JButton Ejemplo;
 
     private Control control;
 
@@ -114,6 +115,19 @@ public class LexerGui extends JFrame  {
             public void actionPerformed(ActionEvent e) {
                 GUISemantic semantic = new GUISemantic();
                 semantic.setVisible(true);
+            }
+        });
+        Ejemplo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.setText("int main(){\n" +
+                        "\tif(a==0){\n" +
+                        "\t\tint b = 0;\n"+
+                        "\t}else{\n" +
+                        "\t\tint c, v ,d;\n"+
+                        "\t}\n" +
+                        "\n" +
+                        "}\n");
             }
         });
     }
