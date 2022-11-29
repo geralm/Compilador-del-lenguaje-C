@@ -180,7 +180,7 @@ start with PROGRAMA;
 
 //DECLARACIONES
 
-Declaracion ::= Declaracion_Specs  PuntoComa
+Declaracion ::= Declaracion_Specs  PuntoComa {:trigger(AccionSemantica.INSERTAR_TS, "$Variable");:}
     | Declaracion_Specs  Init_Declarador_Lista  PuntoComa {:trigger(AccionSemantica.INSERTAR_TS, "$Variable");:};
 
 TipoDato ::= Char:tipo {:trigger(AccionSemantica.RECUERDA_TIPO, tipo.toString());:}
@@ -245,7 +245,7 @@ Asignar_Expresion ::= ExpCondicional:ec
       | ExpUnaria:ue  Operador_Asignacion:aop Asignar_Expresion:ae
       ;
 
-Operador_Asignacion ::=Igual
+Operador_Asignacion ::=Igual {:trigger(AccionSemantica.INSERTAR_TS, "$Variable");:}
 	| MultiplicacionAsignacion
 	| DivisionAsignacion
 	| ModuloAsignacion

@@ -23,7 +23,7 @@ public class EvalBinary implements IAccionSemantica{
             nuevo.setTipo(RS_DO.ETypoRs_Do.CONSTANTE);
             nuevo.setValor(String.valueOf(resultado));
             Traductor.getInstance().getPilaSemantica().push(nuevo);
-            System.out.println("Aplicando constant folding");
+            System.out.println("Aplicando constant folding: resultado->"+String.valueOf(resultado));
         }else{
             nuevo.setTipo(RS_DO.ETypoRs_Do.NO_CONSTANTE);
             Traductor.getInstance().addLine("mov eax, ["+String.valueOf(rs_do1.getValor())+"]");

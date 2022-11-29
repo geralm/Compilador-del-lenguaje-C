@@ -1143,7 +1143,7 @@ class CUP$Parser$actions {
           case 1: // Declaracion ::= Declaracion_Specs PuntoComa 
             {
               Object RESULT =null;
-
+		trigger(AccionSemantica.INSERTAR_TS, "$Variable");
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Declaracion",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1734,7 +1734,7 @@ class CUP$Parser$actions {
           case 45: // Operador_Asignacion ::= Igual 
             {
               Object RESULT =null;
-
+		trigger(AccionSemantica.INSERTAR_TS, "$Variable");
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("Operador_Asignacion",23, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
