@@ -48,9 +48,7 @@ action code {:
             System.out.println("Error al ejecutar accion semantica: " + String.valueOf(accionSemantica));
         }
     }
-    public void testPrint(String s){
-        System.out.println("Test print: " + s);
-    }
+
 :}
 parser code {:
     public ControlParser controlParser;
@@ -379,8 +377,8 @@ Statement ::=
 	| WriteStatement:ws
 	;
 
-JumpStatement ::= Continue PuntoComa
-    | Break PuntoComa
+JumpStatement ::= Continue  {:trigger(AccionSemantica.CONTINUE,"Continue");:} PuntoComa
+    | Break {:trigger(AccionSemantica.BREAK,"Break");:} PuntoComa
     | Return PuntoComa
     | Return Exp:e PuntoComa;
 

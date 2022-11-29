@@ -62,8 +62,8 @@ public class Traductor {
         accionesSemanticas.put(AccionSemantica.START_WHILE, new StartWhile());
         accionesSemanticas.put(AccionSemantica.TEST_WHILE, new testWhile());
         accionesSemanticas.put(AccionSemantica.END_WHILE, new endWhile());
-
-
+        accionesSemanticas.put(AccionSemantica.BREAK, new Break());
+        accionesSemanticas.put(AccionSemantica.CONTINUE, new Continue());
     }
     public void reiniciar(){
          PilaSemantica pilaSemantica = new PilaSemantica();
