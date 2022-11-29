@@ -13,4 +13,8 @@ public class RS_Funcion extends abstactRS {
     public void agregarBytes(int cantidadBytes) {
         this.cantidadBytes += cantidadBytes;
     }
+
+    public int getCantidadBytes() {
+        return cantidadBytes;
+    }
 }

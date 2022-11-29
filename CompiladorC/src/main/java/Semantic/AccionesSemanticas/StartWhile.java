@@ -2,7 +2,6 @@ package Semantic.AccionesSemanticas;
 
 import Enums.rsType;
 import Semantic.RegistrosSemanticos.RS_Factory;
-import Semantic.RegistrosSemanticos.RS_IF;
 import Semantic.RegistrosSemanticos.RS_WHILE;
 import Semantic.TablaSimbolos.ErrorSemantico;
 import Semantic.Traductor;
