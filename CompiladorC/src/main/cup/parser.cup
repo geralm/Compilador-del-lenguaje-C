@@ -245,7 +245,7 @@ Asignar_Expresion ::= ExpCondicional:ec
       | ExpUnaria:ue  Operador_Asignacion:aop Asignar_Expresion:ae
       ;
 
-Operador_Asignacion ::=Igual {:trigger(AccionSemantica.INSERTAR_TS, "$Variable");:}
+Operador_Asignacion ::=Igual
 	| MultiplicacionAsignacion
 	| DivisionAsignacion
 	| ModuloAsignacion
@@ -326,7 +326,7 @@ DECLARACIONES ::= Declaracion
 Declaracion_Lista ::= Declaracion:d
     | Declaracion_Lista:dl Declaracion;
 
-DeclaracionFuncion ::= Declaracion_Specs:ds Declarador:d {: trigger(AccionSemantica.INSERTAR_TS,"$Funcion");:} Declaracion_Lista:dl {: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
+DeclaracionFuncion ::= Declaracion_Specs:ds Declarador:d {: trigger(AccionSemantica.INSERTAR_TS,"$Funcion");:} Declaracion_Lista:dl {: trigger(AccionSemantica.INSERTAR_TS,"$Parametro");:}{: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
     | Declaracion_Specs:ds Declarador:d {: Parser.newScope();trigger(AccionSemantica.INSERTAR_TS,"$Funcion"); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
     | Declarador:d {: trigger(AccionSemantica.INSERTAR_TS,"$Funcion");:} Declaracion_Lista:dl {: Parser.newScope(); :} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
     | Declarador:d {: Parser.newScope(); trigger(AccionSemantica.INSERTAR_TS,"$Funcion");:} DeclaracionCompuesta:dc {: Parser.deleteScope(); :}
